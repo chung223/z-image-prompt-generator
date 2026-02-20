@@ -9,93 +9,101 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --sp-red: #c41e3a;
-            --sp-orange: #e67e22;
-            --sp-gold: #d4a574;
-            --sp-brown: #5d4037;
-            --sp-cream: #f5f0e6;
-            --sp-dark: #2c1810;
-            --sp-green: #2d5a27;
+            --bath-blue: #0a1628;
+            --bath-indigo: #1a2a4a;
+            --bath-lantern: #ff6b35;
+            --bath-lantern-light: #ffa500;
+            --bath-cream: #f5e6d3;
+            --bath-gold: #d4a574;
+            --bath-red: #c41e3a;
+            --text-light: #e8d5c4;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Noto Serif TC', 'Zen Maru Gothic', serif;
-            background: linear-gradient(180deg, #f5e6d3 0%, #e8d5c4 30%, #dcc8b5 60%, #c9a87c 100%);
+            background: linear-gradient(180deg, #0a1628 0%, #1a2a4a 40%, #2d1b4e 100%);
             min-height: 100vh;
-            color: var(--sp-dark);
+            color: var(--text-light);
             line-height: 1.8;
         }
-        .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
-        .particle { position: absolute; background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, transparent 70%); border-radius: 50%; animation: float-particles 15s infinite ease-in-out; }
-        .p1 { width: 8px; height: 8px; top: 20%; left: 10%; }
-        .p2 { width: 12px; height: 12px; top: 60%; left: 80%; animation-delay: 2s; }
-        .p3 { width: 6px; height: 6px; top: 40%; left: 30%; animation-delay: 4s; }
-        .p4 { width: 10px; height: 10px; top: 80%; left: 60%; animation-delay: 1s; }
-        .p5 { width: 7px; height: 7px; top: 30%; left: 70%; animation-delay: 3s; }
-        @keyframes float-particles { 0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.6; } 50% { transform: translateY(-30px) rotate(180deg); opacity: 1; } }
-        body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E"); opacity: 0.03; pointer-events: none; z-index: 1000; }
+        .steam { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
+        .steam-particle { position: absolute; bottom: -50px; background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%); border-radius: 50%; animation: rise 8s infinite ease-in-out; }
+        .sp1 { width: 60px; height: 60px; left: 10%; }
+        .sp2 { width: 80px; height: 80px; left: 30%; animation-delay: 1.5s; }
+        .sp3 { width: 50px; height: 50px; left: 50%; animation-delay: 0.5s; }
+        .sp4 { width: 70px; height: 70px; left: 70%; animation-delay: 2s; }
+        .sp5 { width: 55px; height: 55px; left: 85%; animation-delay: 1s; }
+        @keyframes rise { 0% { transform: translateY(0) scale(1); opacity: 0; } 20% { opacity: 0.6; } 100% { transform: translateY(-100vh) scale(1.5); opacity: 0; } }
+        .lantern-glow { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(ellipse at 20% 20%, rgba(255,107,53,0.1) 0%, transparent 50%), radial-gradient(ellipse at 80% 30%, rgba(255,165,0,0.08) 0%, transparent 40%); pointer-events: none; z-index: 1; }
         header { position: relative; z-index: 10; text-align: center; padding: 50px 20px 30px; }
-        h1 { font-size: 2.8rem; color: var(--sp-red); text-shadow: 2px 2px 0 var(--sp-gold); font-weight: 700; letter-spacing: 4px; margin-bottom: 8px; }
-        .subtitle { color: var(--sp-brown); font-size: 1.1rem; font-style: italic; }
+        h1 { font-size: 2.8rem; color: var(--bath-lantern); text-shadow: 0 0 20px rgba(255,107,53,0.5), 0 0 40px rgba(255,107,53,0.3); font-weight: 700; letter-spacing: 6px; margin-bottom: 8px; }
+        .subtitle { color: var(--bath-gold); font-size: 1.1rem; font-style: italic; }
         main { position: relative; z-index: 10; max-width: 900px; margin: 0 auto; padding: 20px; padding-bottom: 100px; }
-        .card { background: rgba(245, 240, 230, 0.95); border-radius: 4px; padding: 32px; margin-bottom: 24px; box-shadow: 0 8px 32px rgba(44, 24, 16, 0.15); border: 1px solid rgba(212, 165, 116, 0.3); position: relative; }
-        .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, transparent, var(--sp-red), transparent); }
-        .card-title { font-size: 1.4rem; color: var(--sp-red); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; font-weight: 600; border-bottom: 2px solid var(--sp-gold); padding-bottom: 12px; }
-        .card-title::before { content: '◆'; color: var(--sp-gold); }
-        label { display: block; font-weight: 500; margin-bottom: 10px; color: var(--sp-dark); }
-        input[type="text"], textarea, select { width: 100%; padding: 16px 20px; border: 2px solid var(--sp-gold); border-radius: 4px; font-size: 1rem; font-family: inherit; transition: all 0.3s ease; background: #fffcf5; }
-        input[type="text"]:focus, textarea:focus, select:focus { outline: none; border-color: var(--sp-red); box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.1); }
+        .card { background: rgba(26, 42, 74, 0.85); backdrop-filter: blur(10px); border-radius: 8px; padding: 32px; margin-bottom: 24px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4); border: 1px solid rgba(255,107,53,0.2); position: relative; }
+        .card::before { content: '🏮'; position: absolute; top: -15px; left: 20px; font-size: 24px; }
+        .card::after { content: '🏮'; position: absolute; top: -15px; right: 20px; font-size: 24px; }
+        .card-title { font-size: 1.4rem; color: var(--bath-lantern); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; font-weight: 600; border-bottom: 2px solid var(--bath-gold); padding-bottom: 12px; }
+        .card-title::before { content: '◆'; color: var(--bath-gold); }
+        label { display: block; font-weight: 500; margin-bottom: 10px; color: var(--bath-cream); }
+        input[type="text"], textarea, select { width: 100%; padding: 16px 20px; border: 2px solid var(--bath-gold); border-radius: 8px; font-size: 1rem; font-family: inherit; transition: all 0.3s ease; background: rgba(10, 22, 40, 0.8); color: var(--text-light); }
+        input[type="text"]::placeholder, textarea::placeholder { color: rgba(232,213,196,0.5); }
+        input[type="text"]:focus, textarea:focus, select:focus { outline: none; border-color: var(--bath-lantern); box-shadow: 0 0 0 3px rgba(255,107,53,0.2); }
         textarea { min-height: 140px; resize: vertical; }
         .select-wrapper { position: relative; }
-        .select-wrapper::after { content: '▼'; position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font-size: 0.75rem; color: var(--sp-brown); pointer-events: none; }
-        select { appearance: none; cursor: pointer; }
-        .tags-container { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 14px; }
-        .tag { display: inline-flex; align-items: center; gap: 6px; padding: 10px 18px; background: #fffcf5; border: 2px solid var(--sp-gold); border-radius: 4px; font-size: 0.9rem; cursor: pointer; transition: all 0.2s ease; user-select: none; box-shadow: 2px 2px 0 rgba(93, 64, 55, 0.1); }
-        .tag:hover { transform: translateY(-2px); box-shadow: 3px 3px 0 rgba(93, 64, 55, 0.2); border-color: var(--sp-orange); }
-        .tag.selected { background: var(--sp-red); color: white; border-color: var(--sp-red); box-shadow: 2px 2px 0 var(--sp-brown); }
+        .select-wrapper::after { content: '▼'; position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font-size: 0.75rem; color: var(--bath-gold); pointer-events: none; }
+        select { appearance: none; cursor: pointer; color: var(--text-light); }
+        select option { background: var(--bath-blue); color: var(--text-light); }
+        .tags-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+        .tag { display: inline-flex; align-items: center; gap: 6px; padding: 10px 16px; background: rgba(10, 22, 40, 0.8); border: 2px solid var(--bath-gold); border-radius: 25px; font-size: 0.85rem; cursor: pointer; transition: all 0.2s ease; color: var(--bath-cream); }
+        .tag:hover { transform: translateY(-2px); border-color: var(--bath-lantern); box-shadow: 0 4px 12px rgba(255,107,53,0.3); }
+        .tag.selected { background: var(--bath-lantern); color: #fff; border-color: var(--bath-lantern); box-shadow: 0 0 15px rgba(255,107,53,0.5); }
+        .tag.selected::before { content: '✓ '; }
         .tag .icon { font-size: 1em; }
-        .platform-tag { background: #fff9f0; }
-        .platform-tag.selected { background: var(--sp-orange); border-color: var(--sp-orange); }
+        .platform-tag { background: rgba(26, 42, 74, 0.9); }
+        .platform-tag.selected { background: var(--bath-lantern-light); border-color: var(--bath-lantern-light); }
+        .level-light.selected { background: #27ae60; border-color: #27ae60; }
+        .level-medium.selected { background: #f39c12; border-color: #f39c12; }
+        .level-heavy.selected { background: #c0392b; border-color: #c0392b; }
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
         @media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } }
         .output-section { position: relative; }
-        .output-textarea { background: #fffcf5; font-family: 'Noto Serif TC', serif; font-size: 1rem; min-height: 200px; border: 2px dashed var(--sp-gold); line-height: 1.8; }
+        .output-textarea { background: rgba(10, 22, 40, 0.9); font-family: 'Noto Serif TC', serif; font-size: 1rem; min-height: 200px; border: 2px dashed var(--bath-gold); line-height: 1.8; color: var(--bath-cream); }
         .btn-group { display: flex; gap: 14px; margin-top: 20px; flex-wrap: wrap; }
-        .btn { padding: 16px 32px; border: none; border-radius: 4px; font-size: 1.05rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 10px; font-family: inherit; }
-        .btn-primary { background: var(--sp-red); color: white; box-shadow: 3px 3px 0 var(--sp-brown); }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 5px 5px 0 var(--sp-brown); }
-        .btn-copy { background: var(--sp-orange); color: white; box-shadow: 3px 3px 0 var(--sp-brown); }
-        .btn-clear { background: var(--sp-brown); color: white; box-shadow: 3px 3px 0 #3d2817; }
-        .info-box { background: #fff9f0; border-radius: 4px; padding: 20px 24px; margin-top: 20px; font-size: 0.95rem; border-left: 4px solid var(--sp-red); box-shadow: 2px 2px 0 rgba(93, 64, 55, 0.1); }
-        .info-box strong { color: var(--sp-red); }
-        .tips { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 14px; }
-        .tip { background: #fffcf5; padding: 14px 18px; border-radius: 4px; font-size: 0.9rem; border: 1px solid var(--sp-gold); }
-        .tip::before { content: '✦'; margin-right: 8px; color: var(--sp-red); }
-        .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--sp-red); color: white; padding: 16px 32px; border-radius: 4px; font-weight: 500; box-shadow: 4px 4px 0 var(--sp-brown); z-index: 1000; opacity: 0; transition: all 0.3s ease; }
+        .btn { padding: 16px 32px; border: none; border-radius: 8px; font-size: 1.05rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 10px; font-family: inherit; }
+        .btn-primary { background: linear-gradient(135deg, var(--bath-lantern) 0%, var(--bath-lantern-light) 100%); color: #fff; box-shadow: 0 4px 15px rgba(255,107,53,0.4); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 25px rgba(255,107,53,0.6); }
+        .btn-copy { background: linear-gradient(135deg, var(--bath-gold) 0%, #c9a87c 100%); color: var(--bath-blue); box-shadow: 0 4px 15px rgba(212,165,116,0.3); }
+        .btn-clear { background: rgba(139,69,19,0.8); color: var(--bath-cream); border: 2px solid #8b4513; }
+        .info-box { background: rgba(255,165,0,0.1); border-radius: 8px; padding: 20px 24px; margin-top: 20px; font-size: 0.95rem; border-left: 4px solid var(--bath-lantern); }
+        .info-box strong { color: var(--bath-lantern); }
+        .tips { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-top: 14px; }
+        .tip { background: rgba(10, 22, 40, 0.8); padding: 14px 18px; border-radius: 8px; font-size: 0.85rem; border: 1px solid var(--bath-gold); color: var(--bath-cream); }
+        .tip::before { content: '💡'; margin-right: 8px; }
+        .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--bath-lantern); color: white; padding: 16px 32px; border-radius: 8px; font-weight: 500; box-shadow: 0 4px 20px rgba(0,0,0,0.4); z-index: 1000; opacity: 0; transition: all 0.3s ease; }
         .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-        footer { position: relative; z-index: 10; text-align: center; padding: 30px 20px; color: var(--sp-brown); font-size: 0.9rem; }
-        .nsfw-locked { background: linear-gradient(135deg, #f5e6d3 0%, #e8d5c4 100%); text-align: center; padding: 50px; border: 2px solid var(--sp-red); }
+        footer { position: relative; z-index: 10; text-align: center; padding: 30px 20px; color: var(--bath-gold); font-size: 0.9rem; }
+        .nsfw-locked { background: rgba(26, 42, 74, 0.9); text-align: center; padding: 50px; border: 2px solid var(--bath-red); }
         .nsfw-locked input { max-width: 220px; margin: 20px auto; text-align: center; }
-        .nsfw-unlock-btn { background: var(--sp-red); color: white; width: 100%; max-width: 220px; box-shadow: 3px 3px 0 var(--sp-brown); }
+        .nsfw-unlock-btn { background: var(--bath-red); color: white; width: 100%; max-width: 220px; }
         .nsfw-content { display: none; }
         .nsfw-content.unlocked { display: block; }
-        .level-light { border-color: #27ae60; }
-        .level-medium { border-color: #f39c12; }
-        .level-heavy { border-color: #c0392b; }
-        .exclusive-hint { font-size: 0.75rem; color: var(--sp-brown); margin-left: 8px; font-weight: normal; }
+        .exclusive-hint { font-size: 0.75rem; color: var(--bath-gold); margin-left: 8px; font-weight: normal; opacity: 0.8; }
+        .section-divider { border-bottom: 1px solid rgba(212,165,116,0.3); margin: 24px 0; }
     </style>
 </head>
 <body>
-    <div class="particles">
-        <div class="particle p1"></div>
-        <div class="particle p2"></div>
-        <div class="particle p3"></div>
-        <div class="particle p4"></div>
-        <div class="particle p5"></div>
+    <div class="steam">
+       steam-particle sp1"></div>
+        <div class=" <div class="steam-particle sp2"></div>
+        <div class="steam-particle sp3"></div>
+        <div class="steam-particle sp4"></div>
+        <div class="steam-particle sp5"></div>
     </div>
+    <div class="lantern-glow"></div>
+    
     <header>
         <h1>✨ Z-Image 提示詞生成器</h1>
-        <p class="subtitle">神隱少女風格 • 溫暖色調 • 紙質質感</p>
+        <p class="subtitle">湯屋風格 • 蒸汽氛圍 • 暖光基調</p>
     </header>
     <main>
         <div class="card">
@@ -103,6 +111,75 @@
             <label for="subject">你想生成什麼？（中文描述）</label>
             <input type="text" id="subject" placeholder="例如：一個可愛的小女孩在森林裡奔跑">
         </div>
+        
+        <div class="card">
+            <h2 class="card-title">👤 人物特徵</h2>
+            <div class="grid-2">
+                <div>
+                    <label>年齡</label>
+                    <div class="tags-container">
+                        <span class="tag" data-person="infant,嬰兒" onclick="toggleNSFW(this)">👶 嬰兒</span>
+                        <span class="tag" data-person="child,兒童" onclick="toggleNSFW(this)">👧 兒童</span>
+                        <span class="tag" data-person="teenager,青少年" onclick="toggleNSFW(this)">👦 青少年</span>
+                        <span class="tag" data-person="young adult,年輕成人" onclick="toggleNSFW(this)">👱 青年</span>
+                        <span class="tag" data-person="adult,成年人" onclick="toggleNSFW(this)">👨 成人</span>
+                        <span class="tag" data-person="middle-aged,中年人" onclick="toggleNSFW(this)">👨‍🦰 中年</span>
+                        <span class="tag" data-person="elderly,老年人" onclick="toggleNSFW(this)">👴 老年</span>
+                    </div>
+                </div>
+                <div>
+                    <label>性別</label>
+                    <div class="tags-container">
+                        <span class="tag" data-person="male,男性" onclick="toggleNSFW(this)">👨 男性</span>
+                        <span class="tag" data-person="female,女性" onclick="toggleNSFW(this)">👩 女性</span>
+                        <span class="tag" data-person="androgynous,中性" onclick="toggleNSFW(this)">😐 中性</span>
+                    </div>
+                </div>
+            </div>
+            <div class="section-divider"></div>
+            <div class="grid-2">
+                <div>
+                    <label>種族/外貌</label>
+                    <div class="tags-container">
+                        <span class="tag" data-person="East Asian,亞洲人" onclick="toggleNSFW(this)">🌏 亞洲</span>
+                        <span class="tag" data-person="Caucasian,歐美人" onclick="toggleNSFW(this)">🌍 歐美</span>
+                        <span class="tag" data-person="African,非洲人" onclick="toggleNSFW(this)">🌍 非洲</span>
+                        <span class="tag" data-person="Latin American,拉丁裔" onclick="toggleNSFW(this)">🌎 拉丁</span>
+                    </div>
+                </div>
+                <div>
+                    <label>髮型</label>
+                    <div class="tags-container">
+                        <span class="tag" data-person="long hair,長髮" onclick="toggleNSFW(this)">💇 長髮</span>
+                        <span class="tag" data-person="short hair,短髮" onclick="toggleNSFW(this)">💇‍♀️ 短髮</span>
+                        <span class="tag" data-person="curly hair,捲髮" onclick="toggleNSFW(this)">🧑‍🦱 捲髮</span>
+                        <span class="tag" data-person="straight hair,直髮" onclick="toggleNSFW(this)">👩 直髮</span>
+                    </div>
+                </div>
+            </div>
+            <div class="section-divider"></div>
+            <div class="grid-2">
+                <div>
+                    <label>表情</label>
+                    <div class="tags-container">
+                        <span class="tag" data-person="smiling,微笑" onclick="toggleNSFW(this)">😊 微笑</span>
+                        <span class="tag" data-person="laughing,大笑" onclick="toggleNSFW(this)">😂 大笑</span>
+                        <span class="tag" data-person="serious,嚴肅" onclick="toggleNSFW(this)">😐 嚴肅</span>
+                        <span class="tag" data-person="surprised,驚訝" onclick="toggleNSFW(this)">😲 驚訝</span>
+                        <span class="tag" data-person="sad,憂鬱" onclick="toggleNSFW(this)">😢 憂鬱</span>
+                    </div>
+                </div>
+                <div>
+                    <label>臉型</label>
+                    <div class="tags-container">
+                        <span class="tag" data-person="round face,圓臉" onclick="toggleNSFW(this)">🟢 圓臉</span>
+                        <span class="tag" data-person="square face,方臉" onclick="toggleNSFW(this)">🟤 方臉</span>
+                        <span class="tag" data-person="oval face,瓜子臉" onclick="toggleNSFW(this)">🟡 瓜子臉</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="card">
             <h2 class="card-title">📱 發布平台</h2>
             <div class="tags-container">
@@ -116,6 +193,7 @@
                 <span class="tag platform-tag" data-platform="ecommerce" onclick="selectPlatform(this)"><span class="icon">🛒</span>電商</span>
             </div>
         </div>
+
         <div class="card">
             <h2 class="card-title">藝術風格</h2>
             <div class="grid-2">
@@ -137,13 +215,11 @@
                                 <option value="浮世繪風格">浮世繪</option>
                                 <option value="賽博龐克風格">賽博龐克</option>
                                 <option value="蒸汽朋克風格">蒸汽朋克</option>
-                                <option value="極簡主義風格">極簡主義</option>
                             </optgroup>
                             <optgroup label="攝影風格">
                                 <option value="電影感攝影">電影感攝影</option>
                                 <option value="棚內攝影">棚內攝影</option>
                                 <option value="街頭攝影風格">街頭攝影</option>
-                                <option value="風景攝影風格">風景攝影</option>
                             </optgroup>
                         </select>
                     </div>
@@ -158,16 +234,15 @@
                             <option value="歡樂活力的氛圍">歡樂活力 ☀️</option>
                             <option value="憂鬱詩意的氛圍">憂鬱詩意 🌙</option>
                             <option value="史詩壯闊的氛圍">史詩壯闊 🏔️</option>
-                            <option value="詭異不安的氛圍">詭異不安 🌑</option>
                             <option value="清新自然的氛圍">清新自然 🍃</option>
-                            <option value="復古懷舊的氛圍">復古懷舊 📻</option>
                         </select>
                     </div>
                 </div>
             </div>
         </div>
+
         <div class="card">
-            <h2 class="card-title">環境與光線 <span class="exclusive-hint">（光線互斥：選一個會取消其他）</span></h2>
+            <h2 class="card-title">環境與光線 <span class="exclusive-hint">（互斥）</span></h2>
             <div class="grid-2">
                 <div>
                     <label for="environment">場景環境</label>
@@ -179,21 +254,16 @@
                             <option value="繁華的都市街道">🏙️ 繁華都市</option>
                             <option value="古老的城堡">🏰 古老城堡</option>
                             <option value="科幻風格的太空站">🚀 科幻太空站</option>
-                            <option value="夢境般的虛空">💫 夢境虛空</option>
                             <option value="溫馨的小屋">🏠 溫馨小屋</option>
                             <option value="神秘的水下世界">🌊 水下世界</option>
-                            <option value="飄浮的雲端天際">☁️ 雲端天際</option>
-                            <option value="廢棄的工廠廢墟">🏚️ 廢墟工廠</option>
                             <option value="室內攝影棚">🏠 室內攝影棚</option>
-                            <option value="臥室場景">🛏️ 臥室</option>
-                            <option value="浴室場景">🛁 浴室</option>
                         </select>
                     </div>
                 </div>
                 <div>
-                    <label for="lighting">光線條件 <span class="exclusive-hint">（互斥）</span></label>
+                    <label for="lighting">光線條件</label>
                     <div class="select-wrapper">
-                        <select id="lighting" onchange="handleExclusiveSelect(this, 'lighting')">
+                        <select id="lighting">
                             <option value="">選擇光線...</option>
                             <option value="金色的陽光灑落">☀️ 金色陽光</option>
                             <option value="柔和的晨光">🌅 柔和晨光</option>
@@ -203,30 +273,27 @@
                             <option value="浪漫的星光">✨ 浪漫星光</option>
                             <option value="戲劇性的陰影">🎬 戲劇性陰影</option>
                             <option value="夢幻的柔光">💕 夢幻柔光</option>
-                            <option value="強烈的手電筒光源">🔦 強光</option>
-                            <option value="蠟燭光">🕯️ 蠟燭光</option>
                         </select>
                     </div>
                 </div>
             </div>
         </div>
+
         <div class="card">
-            <h2 class="card-title">視角與構圖 <span class="exclusive-hint">（互斥選項會自動取消上一個）</span></h2>
+            <h2 class="card-title">視角與構圖</h2>
             <div class="grid-2">
                 <div>
-                    <label for="camera">拍攝視角 <span class="exclusive-hint">（互斥）</span></label>
+                    <label for="camera">拍攝視角</label>
                     <div class="select-wrapper">
-                        <select id="camera" onchange="handleExclusiveSelect(this, 'camera')">
+                        <select id="camera">
                             <option value="">選擇視角...</option>
-                            <option value="特寫鏡頭">📸 特寫鏡頭</option>
-                            <option value="半身鏡頭">📸 半身鏡頭</option>
-                            <option value="全身鏡頭">📸 全身鏡頭</option>
-                            <option value="廣角鏡頭拍攝">🌆 廣角鏡頭</option>
-                            <option value="鳥瞰視角">🦅 鳥瞰視角</option>
-                            <option value="仰視角度拍攝">🏛️ 仰視視角</option>
-                            <option value="低角度拍攝">🎬 低角度拍攝</option>
-                            <option value="正面直視鏡頭">👁️ 正面直視</option>
-                            <option value="側光輪廓拍攝">🌟 側光輪廓</option>
+                            <option value="特寫鏡頭">📸 特寫</option>
+                            <option value="半身鏡頭">📸 半身</option>
+                            <option value="全身鏡頭">📸 全身</option>
+                            <option value="廣角鏡頭">🌆 廣角</option>
+                            <option value="鳥瞰視角">🦅 鳥瞰</option>
+                            <option value="仰視角度">🏛️ 仰視</option>
+                            <option value="正面直視">👁️ 正面</option>
                         </select>
                     </div>
                 </div>
@@ -235,167 +302,97 @@
                     <div class="select-wrapper">
                         <select id="composition">
                             <option value="">選擇構圖...</option>
-                            <option value="對稱構圖">⚖️ 對稱構圖</option>
-                            <option value="三分法構圖">📐 三分法構圖</option>
-                            <option value="引導線構圖">➡️ 引導線構圖</option>
-                            <option value="框架構圖">🖼️ 框架構圖</option>
-                            <option value="留白構圖">🍃 留白構圖</option>
-                            <option value="螺旋構圖">🌀 螺旋構圖</option>
+                            <option value="對稱構圖">⚖️ 對稱</option>
+                            <option value="三分法構圖">📐 三分法</option>
+                            <option value="框架構圖">🖼️ 框架</option>
+                            <option value="留白構圖">🍃 留白</option>
                         </select>
                     </div>
                 </div>
             </div>
         </div>
+
         <div class="card">
             <h2 class="card-title">進階選項</h2>
-            <label>品質標籤（可多選）</label>
+            <label>品質標籤</label>
             <div class="tags-container">
-                <span class="tag" data-tag="high quality" onclick="toggleTag(this)"><span class="icon">💎</span>高畫質</span>
-                <span class="tag" data-tag="extremely detailed" onclick="toggleTag(this)"><span class="icon">🔍</span>極度精細</span>
-                <span class="tag" data-tag="8k resolution" onclick="toggleTag(this)"><span class="icon">🖥️</span>8K畫質</span>
-                <span class="tag" data-tag="masterpiece" onclick="toggleTag(this)"><span class="icon">🏆</span>大師級</span>
-                <span class="tag" data-tag="best quality" onclick="toggleTag(this)"><span class="icon">👑</span>最佳品質</span>
-                <span class="tag" data-tag="ultra detailed" onclick="toggleTag(this)"><span class="icon">💯</span>超級精細</span>
-                <span class="tag" data-tag="cinematic lighting" onclick="toggleTag(this)"><span class="icon">🎥</span>電影光效</span>
-                <span class="tag" data-tag="volumetric lighting" onclick="toggleTag(this)"><span class="icon">🌫️</span>體積光</span>
-            </div>
-            <div style="margin-top: 24px;">
-                <label>特別效果（可多選）</label>
-                <div class="tags-container">
-                    <span class="tag" data-tag="particles effect" onclick="toggleTag(this)"><span class="icon">✨</span>粒子效果</span>
-                    <span class="tag" data-tag="fireflies" onclick="toggleTag(this)"><span class="icon">🔥</span>螢火蟲</span>
-                    <span class="tag" data-tag="water droplets" onclick="toggleTag(this)"><span class="icon">💧</span>水滴</span>
-                    <span class="tag" data-tag="rainbow" onclick="toggleTag(this)">🌈彩虹</span>
-                    <span class="tag" data-tag="aurora borealis" onclick="toggleTag(this)"><span class="icon">🌌</span>極光</span>
-                    <span class="tag" data-tag="bokeh effect" onclick="toggleTag(this)"><span class="icon">📷</span>散景</span>
-                    <span class="tag" data-tag="motion blur" onclick="toggleTag(this)"><span class="icon">💨</span>動態模糊</span>
-                    <span class="tag" data-tag="lens flare" onclick="toggleTag(this)"><span class="icon">🌟</span>鏡頭光暈</span>
-                </div>
+                <span class="tag" data-tag="high quality" onclick="toggleTag(this)">💎 高畫質</span>
+                <span class="tag" data-tag="extremely detailed" onclick="toggleTag(this)">🔍 極度精細</span>
+                <span class="tag" data-tag="8k resolution" onclick="toggleTag(this)">🖥️ 8K</span>
+                <span class="tag" data-tag="masterpiece" onclick="toggleTag(this)">🏆 大師級</span>
+                <span class="tag" data-tag="cinematic lighting" onclick="toggleTag(this)">🎥 電影光效</span>
+                <span class="tag" data-tag="volumetric lighting" onclick="toggleTag(this)">🌫️ 體積光</span>
             </div>
         </div>
+
         <div class="card nsfw-locked" id="nsfwCard">
-            <h2 class="card-title" style="color: #c41e3a;">🔞 成人選項（密碼解鎖）</h2>
-            <p>輸入密碼解鎖成人選項</p>
+            <h2 class="card-title" style="color: var(--bath-red);">🔞 成人選項（密碼解鎖）</h2>
+            <p>輸入密碼解鎖</p>
             <input type="password" id="nsfwPassword" placeholder="密碼">
             <button class="btn nsfw-unlock-btn" onclick="unlockNSFW()">解鎖 🔓</button>
-            <p id="nsfwError" style="color: #c41e3a; display: none; margin-top: 14px;">密碼錯誤，請重試</p>
+            <p id="nsfwError" style="color: var(--bath-red); display: none; margin-top: 14px;">密碼錯誤</p>
         </div>
+
         <div class="card nsfw-content" id="nsfwContent">
-            <h2 class="card-title" style="color: #c41e3a;">🔞 成人選項</h2>
+            <h2 class="card-title" style="color: var(--bath-red);">🔞 成人選項</h2>
             <label>🔴 重度</label>
             <div class="tags-container">
-                <span class="tag level-heavy" data-nsfw="full body naked, completely nude,全身赤裸" onclick="toggleNSFW(this)">全身赤裸</span>
-                <span class="tag level-heavy" data-nsfw="erotic pose, sensual posture,性感姿勢" onclick="toggleNSFW(this)">性感姿勢</span>
-                <span class="tag level-heavy" data-nsfw="bedroom scene, intimate setting,床戲場景" onclick="toggleNSFW(this)">床戲場景</span>
-                <span class="tag level-heavy" data-nsfw="wet body, dripping water,濕身效果" onclick="toggleNSFW(this)">濕身</span>
-                <span class="tag level-heavy" data-nsfw="bikini, swimwear,比基尼" onclick="toggleNSFW(this)">比基尼</span>
-                <span class="tag level-heavy" data-nsfw="lingerie,性感內衣" onclick="toggleNSFW(this)">性感內衣</span>
+                <span class="tag level-heavy" data-nsfw="full body naked,全身赤裸" onclick="toggleNSFW(this)">全身赤裸</span>
+                <span class="tag level-heavy" data-nsfw="erotic pose,性感姿勢" onclick="toggleNSFW(this)">性感姿勢</span>
+                <span class="tag level-heavy" data-nsfw="wet body,濕身效果" onclick="toggleNSFW(this)">濕身</span>
+                <span class="tag level-heavy" data-nsfw="bikini,比基尼" onclick="toggleNSFW(this)">比基尼</span>
             </div>
-            <div style="margin-top: 24px;">
+            <div style="margin-top: 16px;">
                 <label>🟡 中度</label>
                 <div class="tags-container">
                     <span class="tag level-medium" data-nsfw="underwear,內褲" onclick="toggleNSFW(this)">內褲</span>
-                    <span class="tag level-medium" data-nsfw="semi-nude, partially clothed,半裸" onclick="toggleNSFW(this)">半裸</span>
-                    <span class="tag level-medium" data-nsfw="lingerie, showing midriff,露腰" onclick="toggleNSFW(this)">露腰</span>
-                    <span class="tag level-medium" data-nsfw="cleavage, low-cut top,事業線" onclick="toggleNSFW(this)">事業線</span>
-                    <span class="tag level-medium" data-nsfw="short skirt,迷你裙" onclick="toggleNSFW(this)">迷你裙</span>
-                    <span class="tag level-medium" data-nsfw="transparent clothing,透明衣物" onclick="toggleNSFW(this)">透明衣物</span>
+                    <span class="tag level-medium" data-nsfw="semi-nude,半裸" onclick="toggleNSFW(this)">半裸</span>
+                    <span class="tag level-medium" data-nsfw="lingerie,性感內衣" onclick="toggleNSFW(this)">性感內衣</span>
                 </div>
             </div>
-            <div style="margin-top: 24px;">
+            <div style="margin-top: 16px;">
                 <label>🟢 輕度</label>
                 <div class="tags-container">
                     <span class="tag level-light" data-nsfw="casual wear,休閒服" onclick="toggleNSFW(this)">休閒服</span>
                     <span class="tag level-light" data-nsfw="formal wear,正裝" onclick="toggleNSFW(this)">正裝</span>
-                    <span class="tag level-light" data-nsfw="sportswear,運動服" onclick="toggleNSFW(this)">運動服</span>
                     <span class="tag level-light" data-nsfw="swimsuit,泳裝" onclick="toggleNSFW(this)">泳裝</span>
-                    <span class="tag level-light" data-nsfw="sleepwear,睡衣" onclick="toggleNSFW(this)">睡衣</span>
-                    <span class="tag level-light" data-nsfw="traditional clothing,傳統服飾" onclick="toggleNSFW(this)">傳統服飾</span>
                 </div>
-            </div>
-            <div style="margin-top: 24px;">
-                <label>身體部位特寫</label>
-                <div class="tags-container">
-                    <span class="tag" data-nsfw="face close-up,五官清晰" onclick="toggleNSFW(this)">臉部特寫</span>
-                    <span class="tag" data-nsfw="eyes close-up,大眼睛" onclick="toggleNSFW(this)">眼睛特寫</span>
-                    <span class="tag" data-nsfw="lips close-up,豐唇" onclick="toggleNSFW(this)">嘴唇特寫</span>
-                    <span class="tag" data-nsfw="breasts,胸部" onclick="toggleNSFW(this)">胸部</span>
-                    <span class="tag" data-nsfw="buttocks,臀部" onclick="toggleNSFW(this)">臀部</span>
-                    <span class="tag" data-nsfw="legs,美腿" onclick="toggleNSFW(this)">腿部</span>
-                </div>
-            </div>
-            <div style="margin-top: 24px;">
-                <label>場景氛圍</label>
-                <div class="tags-container">
-                    <span class="tag" data-nsfw="romantic dinner,浪漫晚餐" onclick="toggleNSFW(this)">浪漫晚餐</span>
-                    <span class="tag" data-nsfw="night club,夜店" onclick="toggleNSFW(this)">夜店</span>
-                    <span class="tag" data-nsfw="beach sunset,海灘日落" onclick="toggleNSFW(this)">海灘日落</span>
-                    <span class="tag" data-nsfw="hotel room,飯店房間" onclick="toggleNSFW(this)">飯店房間</span>
-                    <span class="tag" data-nsfw="bathtub,浴缸" onclick="toggleNSFW(this)">浴缸</span>
-                    <span class="tag" data-nsfw="shower,淋浴" onclick="toggleNSFW(this)">淋浴</span>
-                </div>
-            </div>
-            <div style="margin-top: 24px;">
-                <label>動作/姿勢</label>
-                <div class="tags-container">
-                    <span class="tag" data-nsfw="sitting pose,坐姿" onclick="toggleNSFW(this)">坐姿</span>
-                    <span class="tag" data-nsfw="lying down,躺姿" onclick="toggleNSFW(this)">躺姿</span>
-                    <span class="tag" data-nsfw="standing,站立" onclick="toggleNSFW(this)">站立</span>
-                    <span class="tag" data-nsfw="bending forward,向前彎腰" onclick="toggleNSFW(this)">彎腰</span>
-                    <span class="tag" data-nsfw="legs apart,雙腿打開" onclick="toggleNSFW(this)">雙腿打開</span>
-                    <span class="tag" data-nsfw="reaching hand,伸手" onclick="toggleNSFW(this)">伸手</span>
-                </div>
-            </div>
-            <div style="margin-top: 24px;">
-                <label>風格要求</label>
-                <div class="tags-container">
-                    <span class="tag" data-nsfw="soft lighting,柔光" onclick="toggleNSFW(this)">柔光</span>
-                    <span class="tag" data-nsfw="dark moody,黑暗情緒" onclick="toggleNSFW(this)">黑暗情緒</span>
-                    <span class="tag" data-nsfw="soft focus,柔焦" onclick="toggleNSFW(this)">柔焦</span>
-                    <span class="tag" data-nsfw="artistic,藝術感" onclick="toggleNSFW(this)">藝術感</span>
-                    <span class="tag" data-nsfw="beauty filter,美顏濾鏡" onclick="toggleNSFW(this)">美顏濾鏡</span>
-                </div>
-            </div>
-            <div class="info-box" style="margin-top: 24px;">
-                ⚠️ <strong>注意：</strong>請確保生成的內容符合當地法規。
             </div>
         </div>
-        <div class="card output-section">
+
+        <div class="card">
             <h2 class="card-title">✨ 生成的提示詞</h2>
             <textarea id="output" class="output-textarea" placeholder="點擊「生成提示詞」按鈕..."></textarea>
             <div class="btn-group">
-                <button class="btn btn-primary" onclick="generatePrompt()">✨ 生成提示詞</button>
-                <button class="btn btn-copy" onclick="copyToClipboard()">📋 複製結果</button>
+                <button class="btn btn-primary" onclick="generatePrompt()">✨ 生成</button>
+                <button class="btn btn-copy" onclick="copyToClipboard()">📋 複製</button>
                 <button class="btn btn-clear" onclick="clearAll()">🗑️ 清除</button>
             </div>
             <div class="info-box">
                 💡 <strong>Z-Image 技巧：</strong>
                 <div class="tips">
                     <div class="tip">中文 Prompt 完全支援</div>
-                    <div class="tip">越詳細越好（數百字）</div>
-                    <div class="tip">不需要 negative prompt</div>
+                    <div class="tip">越詳細越好</div>
                     <div class="tip">guidance_scale 設 0</div>
                 </div>
             </div>
         </div>
     </main>
-    <footer><p>✨ 靈感來自神隱少女 | Made with 💙 for Z-Image Users</p></footer>
-    <div class="toast" id="toast">已複製到剪貼簿！</div>
+    <footer><p>✨ 靈感來自湯屋 | Made with 💙 for Z-Image Users</p></footer>
+    <div class="toast" id="toast">已複製！</div>
     <script>
         let selectedTags = new Set();
         let selectedNSFW = new Set();
+        let selectedPerson = new Set();
         let selectedPlatforms = new Set();
-        let exclusiveSelections = { lighting: '', camera: '' };
         
         const platformPrompts = {
-            facebook: "適合 Facebook 受眾，家庭友善，溫馨故事感，warm colors, family-friendly, relatable",
-            instagram: "Instagram 風格，時尚潮流，視覺衝擊，vibrant colors, trending aesthetic, highly detailed",
-            youtube: "YouTube 縮圖風            youtube: "YouTube 縮圖風格，吸睛具戲劇性，dramatic lighting, eye-catching, thumbnail style",
-            twitter: "Twitter/X 風格，短文案，meme 感，bold, humorous, concise",
-            threads: "Threads 風格，短文案，informative, trendy",
-            tiktok: "TikTok 風格，卡通化，年輕活力，animated style, youthful, energetic",
-            ads: "廣告風格，商業感，品牌感，professional, brand-compliant, clean design, call-to-action",
-            ecommerce: "電商風格，商品為主，product-focused, clean background, e-commerce ready"
+            facebook: "適合 Facebook 受眾，家庭友善，warm colors, family-friendly",
+            instagram: "Instagram 風格，時尚潮流，vibrant colors, trending",
+            youtube: "YouTube 縮圖風格，dramatic lighting, eye-catching",
+            twitter: "Twitter/X 風格，meme 感，bold",
+            ads: "廣告風格，professional, clean design",
+            ecommerce: "電商風格，product-focused, clean"
         };
 
         function selectPlatform(el) {
@@ -414,17 +411,11 @@
 
         function toggleNSFW(el) {
             el.classList.toggle('selected');
-            const nsfw = el.dataset.nsfw;
-            if (selectedNSFW.has(nsfw)) selectedNSFW.delete(nsfw);
-            else selectedNSFW.add(nsfw);
-        }
-
-        function handleExclusiveSelect(selectEl, type) {
-            const value = selectEl.value;
-            if (exclusiveSelections[type] && exclusiveSelections[type] !== value) {
-                // Clear previous selection handled by select change
+            const val = el.dataset.nsfw || el.dataset.person;
+            if (val) {
+                if (selectedNSFW.has(val)) selectedNSFW.delete(val);
+                else selectedNSFW.add(val);
             }
-            exclusiveSelections[type] = value;
         }
 
         function unlockNSFW() {
@@ -439,74 +430,52 @@
 
         function generatePrompt() {
             const parts = [];
-            
             const subject = document.getElementById('subject').value.trim();
             if (subject) parts.push(subject);
             
-            selectedPlatforms.forEach(p => {
-                if (platformPrompts[p]) parts.push(platformPrompts[p]);
-            });
+            if (selectedPerson.size > 0) parts.push(Array.from(selectedPerson).join(', '));
+            selectedPlatforms.forEach(p => { if (platformPrompts[p]) parts.push(platformPrompts[p]); });
             
             const artStyle = document.getElementById('artStyle').value;
             if (artStyle) parts.push(artStyle);
-            
             const mood = document.getElementById('mood').value;
             if (mood) parts.push(mood);
+            const env = document.getElementById('environment').value;
+            if (env) parts.push(env);
+            const light = document.getElementById('lighting').value;
+            if (light) parts.push(light);
+            const cam = document.getElementById('camera').value;
+            if (cam) parts.push(cam);
+            const comp = document.getElementById('composition').value;
+            if (comp) parts.push(comp);
             
-            const environment = document.getElementById('environment').value;
-            if (environment) parts.push(environment);
-            
-            const lighting = document.getElementById('lighting').value;
-            if (lighting) parts.push(lighting);
-            
-            const camera = document.getElementById('camera').value;
-            if (camera) parts.push(camera);
-            
-            const composition = document.getElementById('composition').value;
-            if (composition) parts.push(composition);
-            
-            if (selectedTags.size > 0) {
-                parts.push(Array.from(selectedTags).join(', '));
-            }
-            
-            if (selectedNSFW.size > 0) {
-                parts.push(Array.from(selectedNSFW).join(', '));
-            }
+            if (selectedTags.size > 0) parts.push(Array.from(selectedTags).join(', '));
+            if (selectedNSFW.size > 0) parts.push(Array.from(selectedNSFW).join(', '));
             
             let result = parts.join(', ');
+            if (result && !result.endsWith('high quality')) result += ', high quality, detailed, masterpiece';
             
-            if (result && !result.endsWith('high quality')) {
-                result += ', high quality, extremely detailed, masterpiece, best quality';
-            }
-            
-            const output = document.getElementById('output');
-            output.value = result || '請至少填寫主體描述';
-            output.classList.add('generating');
-            setTimeout(() => output.classList.remove('generating'), 500);
+            document.getElementById('output').value = result || '請填寫主體描述';
         }
 
         function copyToClipboard() {
-            const output = document.getElementById('output');
-            const text = output.value;
-            if (!text || text === '請至少填寫主體描述') { showToast('沒有內容可複製！'); return; }
-            navigator.clipboard.writeText(text).then(() => showToast('已複製到剪貼簿！')).catch(() => showToast('複製失敗'));
+            const text = document.getElementById('output').value;
+            if (!text || text === '請填寫主體描述') return;
+            navigator.clipboard.writeText(text).then(() => showToast('已複製！'));
         }
 
         function clearAll() {
             ['subject', 'artStyle', 'mood', 'environment', 'lighting', 'camera', 'composition', 'output'].forEach(id => document.getElementById(id).value = '');
             document.querySelectorAll('.tag.selected').forEach(tag => tag.classList.remove('selected'));
-            selectedTags.clear();
-            selectedNSFW.clear();
-            selectedPlatforms.clear();
-            exclusiveSelections = { lighting: '', camera: '' };
-            showToast('已清除所有內容！');
+            selectedTags.clear(); selectedNSFW.clear(); selectedPerson.clear(); selectedPlatforms.clear();
+            showToast('已清除！');
         }
 
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 2500);
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 2500);
         }
     </script>
 </body>
