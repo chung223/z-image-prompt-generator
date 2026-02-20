@@ -6,84 +6,96 @@
     <title>✨ Z-Image 提示詞生成器</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        :root { --sky-blue: #7ec8e3; --forest-green: #4a7c59; --warm-yellow: #f4d03f; --deep-blue: #2c3e50; --text-dark: #2d3436; --card-bg: rgba(255, 255, 255, 0.95); }
+        :root {
+            --sp-red: #c41e3a;
+            --sp-orange: #e67e22;
+            --sp-gold: #d4a574;
+            --sp-brown: #5d4037;
+            --sp-cream: #f5f0e6;
+            --sp-dark: #2c1810;
+            --sp-green: #2d5a27;
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Noto Sans TC', sans-serif; background: linear-gradient(180deg, #87ceeb 0%, #b8e0f0 30%, #d4e8f2 60%, #fff 100%); min-height: 100vh; color: var(--text-dark); line-height: 1.6; }
-        .clouds { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
-        .cloud { position: absolute; background: rgba(255, 255, 255, 0.8); border-radius: 50px; animation: float 25s infinite linear; }
-        .cloud::before, .cloud::after { content: ''; position: absolute; background: inherit; border-radius: 50%; }
-        .cloud-1 { width: 120px; height: 40px; top: 10%; left: -120px; animation-duration: 30s; }
-        .cloud-1::before { width: 50px; height: 50px; top: -25px; left: 20px; }
-        .cloud-1::after { width: 40px; height: 40px; top: -15px; left: 60px; }
-        .cloud-2 { width: 100px; height: 35px; top: 25%; left: -100px; animation-delay: 10s; animation-duration: 35s; }
-        .cloud-2::before { width: 40px; height: 40px; top: -20px; left: 15px; }
-        .cloud-2::after { width: 35px; height: 35px; top: -12px; left: 50px; }
-        .cloud-3 { width: 80px; height: 30px; top: 15%; left: -80px; animation-delay: 5s; animation-duration: 25s; }
-        .cloud-3::before { width: 35px; height: 35px; top: -18px; left: 12px; }
-        .cloud-3::after { width: 28px; height: 28px; top: -10px; left: 40px; }
-        @keyframes float { from { transform: translateX(0); } to { transform: translateX(calc(100vw + 200px)); } }
-        header { position: relative; z-index: 10; text-align: center; padding: 40px 20px 20px; }
-        h1 { font-size: 2.5rem; color: var(--deep-blue); text-shadow: 2px 2px 0 rgba(255, 255, 255, 0.8); margin-bottom: 8px; }
-        .subtitle { color: var(--forest-green); font-size: 1.1rem; }
+        body {
+            font-family: 'Noto Serif TC', 'Zen Maru Gothic', serif;
+            background: linear-gradient(180deg, #f5e6d3 0%, #e8d5c4 30%, #dcc8b5 60%, #c9a87c 100%);
+            min-height: 100vh;
+            color: var(--sp-dark);
+            line-height: 1.8;
+        }
+        .particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
+        .particle { position: absolute; background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, transparent 70%); border-radius: 50%; animation: float-particles 15s infinite ease-in-out; }
+        .p1 { width: 8px; height: 8px; top: 20%; left: 10%; }
+        .p2 { width: 12px; height: 12px; top: 60%; left: 80%; animation-delay: 2s; }
+        .p3 { width: 6px; height: 6px; top: 40%; left: 30%; animation-delay: 4s; }
+        .p4 { width: 10px; height: 10px; top: 80%; left: 60%; animation-delay: 1s; }
+        .p5 { width: 7px; height: 7px; top: 30%; left: 70%; animation-delay: 3s; }
+        @keyframes float-particles { 0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.6; } 50% { transform: translateY(-30px) rotate(180deg); opacity: 1; } }
+        body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E"); opacity: 0.03; pointer-events: none; z-index: 1000; }
+        header { position: relative; z-index: 10; text-align: center; padding: 50px 20px 30px; }
+        h1 { font-size: 2.8rem; color: var(--sp-red); text-shadow: 2px 2px 0 var(--sp-gold); font-weight: 700; letter-spacing: 4px; margin-bottom: 8px; }
+        .subtitle { color: var(--sp-brown); font-size: 1.1rem; font-style: italic; }
         main { position: relative; z-index: 10; max-width: 900px; margin: 0 auto; padding: 20px; padding-bottom: 100px; }
-        .card { background: var(--card-bg); border-radius: 24px; padding: 28px; margin-bottom: 24px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(255, 255, 255, 0.5) inset; backdrop-filter: blur(10px); }
-        .card-title { font-size: 1.3rem; color: var(--forest-green); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
-        .card-title::before { content: '✨'; }
-        label { display: block; font-weight: 500; margin-bottom: 8px; color: var(--deep-blue); }
-        input[type="text"], textarea, select { width: 100%; padding: 14px 18px; border: 2px solid #e0e7ed; border-radius: 14px; font-size: 1rem; font-family: inherit; transition: all 0.3s ease; background: white; }
-        input[type="text"]:focus, textarea:focus, select:focus { outline: none; border-color: var(--sky-blue); box-shadow: 0 0 0 4px rgba(126, 200, 227, 0.2); }
-        textarea { min-height: 120px; resize: vertical; }
+        .card { background: rgba(245, 240, 230, 0.95); border-radius: 4px; padding: 32px; margin-bottom: 24px; box-shadow: 0 8px 32px rgba(44, 24, 16, 0.15); border: 1px solid rgba(212, 165, 116, 0.3); position: relative; }
+        .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, transparent, var(--sp-red), transparent); }
+        .card-title { font-size: 1.4rem; color: var(--sp-red); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; font-weight: 600; border-bottom: 2px solid var(--sp-gold); padding-bottom: 12px; }
+        .card-title::before { content: '◆'; color: var(--sp-gold); }
+        label { display: block; font-weight: 500; margin-bottom: 10px; color: var(--sp-dark); }
+        input[type="text"], textarea, select { width: 100%; padding: 16px 20px; border: 2px solid var(--sp-gold); border-radius: 4px; font-size: 1rem; font-family: inherit; transition: all 0.3s ease; background: #fffcf5; }
+        input[type="text"]:focus, textarea:focus, select:focus { outline: none; border-color: var(--sp-red); box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.1); }
+        textarea { min-height: 140px; resize: vertical; }
         .select-wrapper { position: relative; }
-        .select-wrapper::after { content: '▼'; position: absolute; right: 18px; top: 50%; transform: translateY(-50%); font-size: 0.8rem; color: var(--forest-green); pointer-events: none; }
+        .select-wrapper::after { content: '▼'; position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font-size: 0.75rem; color: var(--sp-brown); pointer-events: none; }
         select { appearance: none; cursor: pointer; }
-        .tags-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
-        .tag { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border: 2px solid transparent; border-radius: 20px; font-size: 0.9rem; cursor: pointer; transition: all 0.2s ease; user-select: none; }
-        .tag:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(74, 124, 89, 0.2); }
-        .tag.selected { background: linear-gradient(135deg, var(--forest-green) 0%, #5d8a66 100%); color: white; border-color: var(--forest-green); }
-        .tag .icon { font-size: 1.1em; }
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .tags-container { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 14px; }
+        .tag { display: inline-flex; align-items: center; gap: 6px; padding: 10px 18px; background: #fffcf5; border: 2px solid var(--sp-gold); border-radius: 4px; font-size: 0.9rem; cursor: pointer; transition: all 0.2s ease; user-select: none; box-shadow: 2px 2px 0 rgba(93, 64, 55, 0.1); }
+        .tag:hover { transform: translateY(-2px); box-shadow: 3px 3px 0 rgba(93, 64, 55, 0.2); border-color: var(--sp-orange); }
+        .tag.selected { background: var(--sp-red); color: white; border-color: var(--sp-red); box-shadow: 2px 2px 0 var(--sp-brown); }
+        .tag .icon { font-size: 1em; }
+        .platform-tag { background: #fff9f0; }
+        .platform-tag.selected { background: var(--sp-orange); border-color: var(--sp-orange); }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
         @media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } }
         .output-section { position: relative; }
-        .output-textarea { background: #fafafa; font-family: 'Consolas', 'Monaco', monospace; font-size: 0.95rem; min-height: 180px; border: 2px dashed #ddd; }
-        .btn-group { display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
-        .btn { padding: 14px 28px; border: none; border-radius: 14px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 8px; }
-        .btn-primary { background: linear-gradient(135deg, var(--forest-green) 0%, #5d8a66 100%); color: white; box-shadow: 0 4px 15px rgba(74, 124, 89, 0.3); }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(74, 124, 89, 0.4); }
-        .btn-copy { background: linear-gradient(135deg, var(--sky-blue) 0%, #5ba3c6 100%); color: white; }
-        .btn-clear { background: linear-gradient(135deg, #ffb6c1 0%, #ff8fa3 100%); color: white; }
-        .info-box { background: linear-gradient(135deg, #fff9e6 0%, #ffecb3 100%); border-radius: 14px; padding: 16px 20px; margin-top: 16px; font-size: 0.95rem; border-left: 4px solid var(--warm-yellow); }
-        .info-box strong { color: #d68910; }
-        .tips { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 16px; }
-        .tip { background: linear-gradient(135deg, #e8f4fd 0%, #d0ebf7 100%); padding: 12px 16px; border-radius: 12px; font-size: 0.9rem; }
-        .tip::before { content: '💡'; margin-right: 6px; }
-        .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--forest-green); color: white; padding: 14px 28px; border-radius: 30px; font-weight: 500; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); z-index: 1000; opacity: 0; transition: all 0.3s ease; }
+        .output-textarea { background: #fffcf5; font-family: 'Noto Serif TC', serif; font-size: 1rem; min-height: 200px; border: 2px dashed var(--sp-gold); line-height: 1.8; }
+        .btn-group { display: flex; gap: 14px; margin-top: 20px; flex-wrap: wrap; }
+        .btn { padding: 16px 32px; border: none; border-radius: 4px; font-size: 1.05rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 10px; font-family: inherit; }
+        .btn-primary { background: var(--sp-red); color: white; box-shadow: 3px 3px 0 var(--sp-brown); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 5px 5px 0 var(--sp-brown); }
+        .btn-copy { background: var(--sp-orange); color: white; box-shadow: 3px 3px 0 var(--sp-brown); }
+        .btn-clear { background: var(--sp-brown); color: white; box-shadow: 3px 3px 0 #3d2817; }
+        .info-box { background: #fff9f0; border-radius: 4px; padding: 20px 24px; margin-top: 20px; font-size: 0.95rem; border-left: 4px solid var(--sp-red); box-shadow: 2px 2px 0 rgba(93, 64, 55, 0.1); }
+        .info-box strong { color: var(--sp-red); }
+        .tips { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-top: 14px; }
+        .tip { background: #fffcf5; padding: 14px 18px; border-radius: 4px; font-size: 0.9rem; border: 1px solid var(--sp-gold); }
+        .tip::before { content: '✦'; margin-right: 8px; color: var(--sp-red); }
+        .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--sp-red); color: white; padding: 16px 32px; border-radius: 4px; font-weight: 500; box-shadow: 4px 4px 0 var(--sp-brown); z-index: 1000; opacity: 0; transition: all 0.3s ease; }
         .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
-        footer { position: relative; z-index: 10; text-align: center; padding: 20px; color: var(--deep-blue); font-size: 0.9rem; opacity: 0.8; }
-        @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
-        .generating { background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; }
-        .nsfw-locked { background: linear-gradient(135deg, #ffe8e8 0%, #fff0f0 100%); text-align: center; padding: 40px; }
-        .nsfw-locked input { max-width: 200px; margin: 15px auto; text-align: center; }
-        .nsfw-unlock-btn { background: linear-gradient(135deg, #c0392b 0%, #e74c3c 100%); color: white; width: 100%; max-width: 200px; }
+        footer { position: relative; z-index: 10; text-align: center; padding: 30px 20px; color: var(--sp-brown); font-size: 0.9rem; }
+        .nsfw-locked { background: linear-gradient(135deg, #f5e6d3 0%, #e8d5c4 100%); text-align: center; padding: 50px; border: 2px solid var(--sp-red); }
+        .nsfw-locked input { max-width: 220px; margin: 20px auto; text-align: center; }
+        .nsfw-unlock-btn { background: var(--sp-red); color: white; width: 100%; max-width: 220px; box-shadow: 3px 3px 0 var(--sp-brown); }
         .nsfw-content { display: none; }
         .nsfw-content.unlocked { display: block; }
         .level-light { border-color: #27ae60; }
         .level-medium { border-color: #f39c12; }
-        .level-heavy { border-color: #e74c3c; }
-        .platform-tag { background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); }
-        .platform-tag.selected { background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%); color: white; }
+        .level-heavy { border-color: #c0392b; }
+        .exclusive-hint { font-size: 0.75rem; color: var(--sp-brown); margin-left: 8px; font-weight: normal; }
     </style>
 </head>
 <body>
-    <div class="clouds">
-        <div class="cloud cloud-1"></div>
-        <div class="cloud cloud-2"></div>
-        <div class="cloud cloud-3"></div>
+    <div class="particles">
+        <div class="particle p1"></div>
+        <div class="particle p2"></div>
+        <div class="particle p3"></div>
+        <div class="particle p4"></div>
+        <div class="particle p5"></div>
     </div>
     <header>
         <h1>✨ Z-Image 提示詞生成器</h1>
-        <p class="subtitle">宮崎駿風格 • 現代化設計 • 響應式</p>
+        <p class="subtitle">神隱少女風格 • 溫暖色調 • 紙質質感</p>
     </header>
     <main>
         <div class="card">
@@ -155,7 +167,7 @@
             </div>
         </div>
         <div class="card">
-            <h2 class="card-title">環境與光線</h2>
+            <h2 class="card-title">環境與光線 <span class="exclusive-hint">（光線互斥：選一個會取消其他）</span></h2>
             <div class="grid-2">
                 <div>
                     <label for="environment">場景環境</label>
@@ -179,9 +191,9 @@
                     </div>
                 </div>
                 <div>
-                    <label for="lighting">光線條件</label>
+                    <label for="lighting">光線條件 <span class="exclusive-hint">（互斥）</span></label>
                     <div class="select-wrapper">
-                        <select id="lighting">
+                        <select id="lighting" onchange="handleExclusiveSelect(this, 'lighting')">
                             <option value="">選擇光線...</option>
                             <option value="金色的陽光灑落">☀️ 金色陽光</option>
                             <option value="柔和的晨光">🌅 柔和晨光</option>
@@ -199,12 +211,12 @@
             </div>
         </div>
         <div class="card">
-            <h2 class="card-title">視角與構圖</h2>
+            <h2 class="card-title">視角與構圖 <span class="exclusive-hint">（互斥選項會自動取消上一個）</span></h2>
             <div class="grid-2">
                 <div>
-                    <label for="camera">拍攝視角</label>
+                    <label for="camera">拍攝視角 <span class="exclusive-hint">（互斥）</span></label>
                     <div class="select-wrapper">
-                        <select id="camera">
+                        <select id="camera" onchange="handleExclusiveSelect(this, 'camera')">
                             <option value="">選擇視角...</option>
                             <option value="特寫鏡頭">📸 特寫鏡頭</option>
                             <option value="半身鏡頭">📸 半身鏡頭</option>
@@ -247,7 +259,7 @@
                 <span class="tag" data-tag="cinematic lighting" onclick="toggleTag(this)"><span class="icon">🎥</span>電影光效</span>
                 <span class="tag" data-tag="volumetric lighting" onclick="toggleTag(this)"><span class="icon">🌫️</span>體積光</span>
             </div>
-            <div style="margin-top: 20px;">
+            <div style="margin-top: 24px;">
                 <label>特別效果（可多選）</label>
                 <div class="tags-container">
                     <span class="tag" data-tag="particles effect" onclick="toggleTag(this)"><span class="icon">✨</span>粒子效果</span>
@@ -262,14 +274,14 @@
             </div>
         </div>
         <div class="card nsfw-locked" id="nsfwCard">
-            <h2 class="card-title" style="color: #c0392b;">🔞 成人選項（密碼解鎖）</h2>
+            <h2 class="card-title" style="color: #c41e3a;">🔞 成人選項（密碼解鎖）</h2>
             <p>輸入密碼解鎖成人選項</p>
             <input type="password" id="nsfwPassword" placeholder="密碼">
             <button class="btn nsfw-unlock-btn" onclick="unlockNSFW()">解鎖 🔓</button>
-            <p id="nsfwError" style="color: red; display: none; margin-top: 10px;">密碼錯誤，請重試</p>
+            <p id="nsfwError" style="color: #c41e3a; display: none; margin-top: 14px;">密碼錯誤，請重試</p>
         </div>
         <div class="card nsfw-content" id="nsfwContent">
-            <h2 class="card-title" style="color: #c0392b;">🔞 成人選項</h2>
+            <h2 class="card-title" style="color: #c41e3a;">🔞 成人選項</h2>
             <label>🔴 重度</label>
             <div class="tags-container">
                 <span class="tag level-heavy" data-nsfw="full body naked, completely nude,全身赤裸" onclick="toggleNSFW(this)">全身赤裸</span>
@@ -279,7 +291,7 @@
                 <span class="tag level-heavy" data-nsfw="bikini, swimwear,比基尼" onclick="toggleNSFW(this)">比基尼</span>
                 <span class="tag level-heavy" data-nsfw="lingerie,性感內衣" onclick="toggleNSFW(this)">性感內衣</span>
             </div>
-            <div style="margin-top: 20px;">
+            <div style="margin-top: 24px;">
                 <label>🟡 中度</label>
                 <div class="tags-container">
                     <span class="tag level-medium" data-nsfw="underwear,內褲" onclick="toggleNSFW(this)">內褲</span>
@@ -290,7 +302,7 @@
                     <span class="tag level-medium" data-nsfw="transparent clothing,透明衣物" onclick="toggleNSFW(this)">透明衣物</span>
                 </div>
             </div>
-            <div style="margin-top: 20px;">
+            <div style="margin-top: 24px;">
                 <label>🟢 輕度</label>
                 <div class="tags-container">
                     <span class="tag level-light" data-nsfw="casual wear,休閒服" onclick="toggleNSFW(this)">休閒服</span>
@@ -301,7 +313,7 @@
                     <span class="tag level-light" data-nsfw="traditional clothing,傳統服飾" onclick="toggleNSFW(this)">傳統服飾</span>
                 </div>
             </div>
-            <div style="margin-top: 20px;">
+            <div style="margin-top: 24px;">
                 <label>身體部位特寫</label>
                 <div class="tags-container">
                     <span class="tag" data-nsfw="face close-up,五官清晰" onclick="toggleNSFW(this)">臉部特寫</span>
@@ -312,7 +324,7 @@
                     <span class="tag" data-nsfw="legs,美腿" onclick="toggleNSFW(this)">腿部</span>
                 </div>
             </div>
-            <div style="margin-top: 20px;">
+            <div style="margin-top: 24px;">
                 <label>場景氛圍</label>
                 <div class="tags-container">
                     <span class="tag" data-nsfw="romantic dinner,浪漫晚餐" onclick="toggleNSFW(this)">浪漫晚餐</span>
@@ -323,7 +335,7 @@
                     <span class="tag" data-nsfw="shower,淋浴" onclick="toggleNSFW(this)">淋浴</span>
                 </div>
             </div>
-            <div style="margin-top: 20px;">
+            <div style="margin-top: 24px;">
                 <label>動作/姿勢</label>
                 <div class="tags-container">
                     <span class="tag" data-nsfw="sitting pose,坐姿" onclick="toggleNSFW(this)">坐姿</span>
@@ -334,7 +346,7 @@
                     <span class="tag" data-nsfw="reaching hand,伸手" onclick="toggleNSFW(this)">伸手</span>
                 </div>
             </div>
-            <div style="margin-top: 20px;">
+            <div style="margin-top: 24px;">
                 <label>風格要求</label>
                 <div class="tags-container">
                     <span class="tag" data-nsfw="soft lighting,柔光" onclick="toggleNSFW(this)">柔光</span>
@@ -344,7 +356,7 @@
                     <span class="tag" data-nsfw="beauty filter,美顏濾鏡" onclick="toggleNSFW(this)">美顏濾鏡</span>
                 </div>
             </div>
-            <div class="info-box" style="margin-top: 20px;">
+            <div class="info-box" style="margin-top: 24px;">
                 ⚠️ <strong>注意：</strong>請確保生成的內容符合當地法規。
             </div>
         </div>
@@ -367,17 +379,18 @@
             </div>
         </div>
     </main>
-    <footer><p>✨ 靈感來自宮崎駿的魔法世界 | Made with 💙 for Z-Image Users</p></footer>
+    <footer><p>✨ 靈感來自神隱少女 | Made with 💙 for Z-Image Users</p></footer>
     <div class="toast" id="toast">已複製到剪貼簿！</div>
     <script>
         let selectedTags = new Set();
         let selectedNSFW = new Set();
         let selectedPlatforms = new Set();
+        let exclusiveSelections = { lighting: '', camera: '' };
         
         const platformPrompts = {
             facebook: "適合 Facebook 受眾，家庭友善，溫馨故事感，warm colors, family-friendly, relatable",
             instagram: "Instagram 風格，時尚潮流，視覺衝擊，vibrant colors, trending aesthetic, highly detailed",
-            youtube: "YouTube 縮圖風格，吸睛具戲劇性，dramatic lighting, eye-catching, thumbnail style",
+            youtube: "YouTube 縮圖風            youtube: "YouTube 縮圖風格，吸睛具戲劇性，dramatic lighting, eye-catching, thumbnail style",
             twitter: "Twitter/X 風格，短文案，meme 感，bold, humorous, concise",
             threads: "Threads 風格，短文案，informative, trendy",
             tiktok: "TikTok 風格，卡通化，年輕活力，animated style, youthful, energetic",
@@ -406,6 +419,14 @@
             else selectedNSFW.add(nsfw);
         }
 
+        function handleExclusiveSelect(selectEl, type) {
+            const value = selectEl.value;
+            if (exclusiveSelections[type] && exclusiveSelections[type] !== value) {
+                // Clear previous selection handled by select change
+            }
+            exclusiveSelections[type] = value;
+        }
+
         function unlockNSFW() {
             const password = document.getElementById('nsfwPassword').value;
             if (password === 'adult') {
@@ -419,45 +440,35 @@
         function generatePrompt() {
             const parts = [];
             
-            // 主體描述
             const subject = document.getElementById('subject').value.trim();
             if (subject) parts.push(subject);
             
-            // 平台
             selectedPlatforms.forEach(p => {
                 if (platformPrompts[p]) parts.push(platformPrompts[p]);
             });
             
-            // 風格
             const artStyle = document.getElementById('artStyle').value;
             if (artStyle) parts.push(artStyle);
             
-            // 情緒
             const mood = document.getElementById('mood').value;
             if (mood) parts.push(mood);
             
-            // 環境
             const environment = document.getElementById('environment').value;
             if (environment) parts.push(environment);
             
-            // 光線
             const lighting = document.getElementById('lighting').value;
             if (lighting) parts.push(lighting);
             
-            // 視角
             const camera = document.getElementById('camera').value;
             if (camera) parts.push(camera);
             
-            // 構圖
             const composition = document.getElementById('composition').value;
             if (composition) parts.push(composition);
             
-            // 品質標籤
             if (selectedTags.size > 0) {
                 parts.push(Array.from(selectedTags).join(', '));
             }
             
-            // NSFW
             if (selectedNSFW.size > 0) {
                 parts.push(Array.from(selectedNSFW).join(', '));
             }
@@ -487,6 +498,7 @@
             selectedTags.clear();
             selectedNSFW.clear();
             selectedPlatforms.clear();
+            exclusiveSelections = { lighting: '', camera: '' };
             showToast('已清除所有內容！');
         }
 
