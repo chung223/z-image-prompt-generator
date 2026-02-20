@@ -2,7 +2,7 @@
 
 一個專為 Z-Image / Z-Image-Turbo 設計的現代化提示詞生成工具。
 
-![Preview](https://img.shields.io/badge/預覽-Visit%20Website-blue?style=for-the-badge)
+![Preview](https://img.shields.io/badge/預覽-Visit%20Website-blue?style=for-the-badge&link=https%3A%2F%2Fchung223.github.io%2Fz-image-prompt-generator%2F)
 
 ## 🌟 特色功能
 
@@ -40,7 +40,7 @@
 ## 🚀 使用方式
 
 ### 線上使用
-直接訪問：https://chung223.github.io/daily-lab/2026-02-20/
+直接訪問：https://chung223.github.io/z-image-prompt-generator/
 
 ### 本地運行
 ```bash
