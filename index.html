@@ -3,12 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✨ Z-Image 提示詞生成器 v2.1</title>
+    <title>✨ Z-Image 提示詞生成器</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        :root { --bath-blue: #0a1628; --bath-indigo: #1a2a4a; --bath-lantern: #ff6b35; --bath-lantern-light: #ffa500; --bath-cream: #f5e6d3; --bath-gold: #d4a574; --bath-red: #c41e3a; --text-light: #e8d5c4; }
+        :root {
+            --bath-blue: #0a1628;
+            --bath-indigo: #1a2a4a;
+            --bath-lantern: #ff6b35;
+            --bath-lantern-light: #ffa500;
+            --bath-cream: #f5e6d3;
+            --bath-gold: #d4a574;
+            --bath-red: #c41e3a;
+            --text-light: #e8d5c4;
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Noto Serif TC', 'Zen Maru Gothic', serif; background: linear-gradient(180deg, #0a1628 0%, #1a2a4a 40%, #2d1b4e 100%); min-height: 100vh; color: var(--text-light); line-height: 1.8; }
+        body {
+            font-family: 'Noto Serif TC', 'Zen Maru Gothic', serif;
+            background: linear-gradient(180deg, #0a1628 0%, #1a2a4a 40%, #2d1b4e 100%);
+            min-height: 100vh;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
         .steam { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
         .steam-particle { position: absolute; bottom: -50px; background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%); border-radius: 50%; animation: rise 8s infinite ease-in-out; }
         .sp1 { width: 60px; height: 60px; left: 10%; }
@@ -21,309 +38,509 @@
         header { position: relative; z-index: 10; text-align: center; padding: 50px 20px 30px; }
         h1 { font-size: 2.8rem; color: var(--bath-lantern); text-shadow: 0 0 20px rgba(255,107,53,0.5), 0 0 40px rgba(255,107,53,0.3); font-weight: 700; letter-spacing: 6px; margin-bottom: 8px; }
         .subtitle { color: var(--bath-gold); font-size: 1.1rem; font-style: italic; }
-        .version-badge { background: var(--bath-lantern); color: white; padding: 4px 12px; border-radius: 12px; font-size: 0.75rem; margin-left: 10px; vertical-align: middle; }
         main { position: relative; z-index: 10; max-width: 900px; margin: 0 auto; padding: 20px; padding-bottom: 100px; }
         .card { background: rgba(26, 42, 74, 0.85); backdrop-filter: blur(10px); border-radius: 8px; padding: 32px; margin-bottom: 24px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4); border: 1px solid rgba(255,107,53,0.2); position: relative; }
         .card::before { content: '🏮'; position: absolute; top: -15px; left: 20px; font-size: 24px; }
         .card::after { content: '🏮'; position: absolute; top: -15px; right: 20px; font-size: 24px; }
         .card-title { font-size: 1.4rem; color: var(--bath-lantern); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; font-weight: 600; border-bottom: 2px solid var(--bath-gold); padding-bottom: 12px; }
         .card-title::before { content: '◆'; color: var(--bath-gold); }
-        .card-subtitle { font-size: 0.9rem; color: var(--bath-gold); margin-bottom: 16px; }
         label { display: block; font-weight: 500; margin-bottom: 10px; color: var(--bath-cream); }
-        input[type="text"], textarea { width: 100%; padding: 16px 20px; border: 2px solid var(--bath-gold); border-radius: 8px; font-size: 1rem; font-family: inherit; transition: all 0.3s ease; background: rgba(10, 22, 40, 0.8); color: var(--text-light); }
+        input[type="text"], textarea, select { width: 100%; padding: 16px 20px; border: 2px solid var(--bath-gold); border-radius: 8px; font-size: 1rem; font-family: inherit; transition: all 0.3s ease; background: rgba(10, 22, 40, 0.8); color: var(--text-light); }
         input[type="text"]::placeholder, textarea::placeholder { color: rgba(232,213,196,0.5); }
-        input[type="text"]:focus, textarea:focus { outline: none; border-color: var(--bath-lantern); box-shadow: 0 0 0 3px rgba(255,107,53,0.2); }
-        textarea { min-height: 100px; resize: vertical; }
+        input[type="text"]:focus, textarea:focus, select:focus { outline: none; border-color: var(--bath-lantern); box-shadow: 0 0 0 3px rgba(255,107,53,0.2); }
+        textarea { min-height: 140px; resize: vertical; }
+        .select-wrapper { position: relative; }
+        .select-wrapper::after { content: '▼'; position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font-size: 0.75rem; color: var(--bath-gold); pointer-events: none; }
+        select { appearance: none; cursor: pointer; color: var(--text-light); }
+        select option { background: var(--bath-blue); color: var(--text-light); }
         .tags-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
-        .tag { display: inline-flex; align-items: center; gap: 6px; padding: 10px 16px; background: rgba(10, 22, 40, 0.8); border: 2px solid var(--bath-gold); border-radius: 25px; font-size: 0.85rem; cursor: pointer; transition: all 0.2s ease; color: var(--bath-cream); user-select: none; }
-        .tag:hover { transform: translateY(-2px); border-color: var(--bath-lantern); }
+        .tag { display: inline-flex; align-items: center; gap: 6px; padding: 10px 16px; background: rgba(10, 22, 40, 0.8); border: 2px solid var(--bath-gold); border-radius: 25px; font-size: 0.85rem; cursor: pointer; transition: all 0.2s ease; color: var(--bath-cream); }
+        .tag:hover { transform: translateY(-2px); border-color: var(--bath-lantern); box-shadow: 0 4px 12px rgba(255,107,53,0.3); }
         .tag.selected { background: var(--bath-lantern); color: #fff; border-color: var(--bath-lantern); box-shadow: 0 0 15px rgba(255,107,53,0.5); }
-        .tag-group-exclusive .tag.selected::before { content: '● '; }
+        .tag.selected::before { content: '✓ '; }
+        .tag .icon { font-size: 1em; }
+        .platform-tag { background: rgba(26, 42, 74, 0.9); }
+        .platform-tag.selected { background: var(--bath-lantern-light); border-color: var(--bath-lantern-light); }
         .level-light.selected { background: #27ae60; border-color: #27ae60; }
         .level-medium.selected { background: #f39c12; border-color: #f39c12; }
         .level-heavy.selected { background: #c0392b; border-color: #c0392b; }
         .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
         @media (max-width: 600px) { .grid-2 { grid-template-columns: 1fr; } }
-        .section-divider { border-bottom: 1px solid rgba(212,165,116,0.3); margin: 24px 0; }
-        .section-group { margin-bottom: 24px; }
+        .output-section { position: relative; }
         .output-textarea { background: rgba(10, 22, 40, 0.9); font-family: 'Noto Serif TC', serif; font-size: 1rem; min-height: 200px; border: 2px dashed var(--bath-gold); line-height: 1.8; color: var(--bath-cream); }
         .btn-group { display: flex; gap: 14px; margin-top: 20px; flex-wrap: wrap; }
         .btn { padding: 16px 32px; border: none; border-radius: 8px; font-size: 1.05rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 10px; font-family: inherit; }
         .btn-primary { background: linear-gradient(135deg, var(--bath-lantern) 0%, var(--bath-lantern-light) 100%); color: #fff; box-shadow: 0 4px 15px rgba(255,107,53,0.4); }
-        .btn-primary:hover { transform: translateY(-2px); }
-        .btn-copy { background: linear-gradient(135deg, var(--bath-gold) 0%, #c9a87c 100%); color: var(--bath-blue); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 25px rgba(255,107,53,0.6); }
+        .btn-copy { background: linear-gradient(135deg, var(--bath-gold) 0%, #c9a87c 100%); color: var(--bath-blue); box-shadow: 0 4px 15px rgba(212,165,116,0.3); }
         .btn-clear { background: rgba(139,69,19,0.8); color: var(--bath-cream); border: 2px solid #8b4513; }
         .info-box { background: rgba(255,165,0,0.1); border-radius: 8px; padding: 20px 24px; margin-top: 20px; font-size: 0.95rem; border-left: 4px solid var(--bath-lantern); }
+        .info-box strong { color: var(--bath-lantern); }
+        .tips { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-top: 14px; }
+        .tip { background: rgba(10, 22, 40, 0.8); padding: 14px 18px; border-radius: 8px; font-size: 0.85rem; border: 1px solid var(--bath-gold); color: var(--bath-cream); }
+        .tip::before { content: '💡'; margin-right: 8px; }
         .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--bath-lantern); color: white; padding: 16px 32px; border-radius: 8px; font-weight: 500; box-shadow: 0 4px 20px rgba(0,0,0,0.4); z-index: 1000; opacity: 0; transition: all 0.3s ease; }
         .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
         footer { position: relative; z-index: 10; text-align: center; padding: 30px 20px; color: var(--bath-gold); font-size: 0.9rem; }
         .nsfw-locked { background: rgba(26, 42, 74, 0.9); text-align: center; padding: 50px; border: 2px solid var(--bath-red); }
-        .nsfw-unlock-btn { background: var(--bath-red); color: white; width: 100%; max-width: 280px; margin-top: 12px; }
+        .nsfw-locked input { max-width: 220px; margin: 20px auto; text-align: center; }
+        .nsfw-unlock-btn { background: var(--bath-red); color: white; width: 100%; max-width: 220px; }
         .nsfw-content { display: none; }
-        .nsfw-content.unlocked { display: block; animation: fadeIn 0.5s ease; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .nsfw-category { margin-bottom: 20px; }
-        .nsfw-category-title { font-size: 1rem; color: var(--bath-cream); margin-bottom: 10px; font-weight: 500; }
-        .weight-help { background: rgba(255,107,53,0.1); border: 1px solid var(--bath-lantern); border-radius: 8px; padding: 12px 16px; margin-top: 12px; font-size: 0.85rem; }
-        .weight-help code { background: rgba(0,0,0,0.3); padding: 2px 6px; border-radius: 4px; color: var(--bath-lantern-light); }
-        .negative-presets { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
-        .negative-preset { font-size: 0.75rem; padding: 6px 12px; background: rgba(192,57,43,0.2); border: 1px solid #c0392b; border-radius: 15px; color: var(--bath-cream); cursor: pointer; }
-        .negative-preset.selected { background: #c0392b; color: white; }
-        .exclusive-badge { font-size: 0.65rem; background: var(--bath-lantern); color: white; padding: 2px 8px; border-radius: 10px; margin-left: 8px; }
+        .nsfw-content.unlocked { display: block; }
+        .exclusive-hint { font-size: 0.75rem; color: var(--bath-gold); margin-left: 8px; font-weight: normal; opacity: 0.8; }
+        .section-divider { border-bottom: 1px solid rgba(212,165,116,0.3); margin: 24px 0; }
     </style>
 </head>
 <body>
-    <div class="steam"><div class="steam-particle sp1"></div><div class="steam-particle sp2"></div><div class="steam-particle sp3"></div><div class="steam-particle sp4"></div><div class="steam-particle sp5"></div></div>
+    <div class="steam">
+       <div class="steam-particle sp1"></div>
+        <div class="steam-particle sp2"></div>
+        <div class="steam-particle sp3"></div>
+        <div class="steam-particle sp4"></div>
+        <div class="steam-particle sp5"></div>
+    </div>
     <div class="lantern-glow"></div>
+    
     <header>
-        <h1>✨ Z-Image <span class="version-badge">v2.1</span></h1>
-        <p class="subtitle">Turbo Prompt Generator</p>
+        <h1>✨ Z-Image 提示詞生成器</h1>
+        <p class="subtitle">湯屋風格 • 蒸汽氛圍 • 暖光基調</p>
     </header>
     <main>
         <div class="card">
-            <h2 class="card-title">👤 第一層：主體與動作</h2>
-            <p class="card-subtitle">Z-Image 核心：誰 + 做什麼，越詳細越好</p>
-            <label>主體描述（必填）</label>
-            <input type="text" id="subject" placeholder="例如：一位年輕女性，有著赤褐色頭髮，身穿皮夾克，在森林中奔跑">
-            <div class="section-divider"></div>
-            <div class="grid-2">
-                <div class="section-group tag-group-exclusive">
-                    <label>性別 <span class="exclusive-badge">單選</span></label>
-                    <div class="tags-container">
-                        <span class="tag" data-exclusive="gender" data-value="男性" onclick="toggleExclusive(this)">男性 (Male)</span>
-                        <span class="tag" data-exclusive="gender" data-value="女性" onclick="toggleExclusive(this)">女性 (Female)</span>
-                        <span class="tag" data-exclusive="gender" data-value="中性" onclick="toggleExclusive(this)">中性 (Androgynous)</span>
-                    </div>
-                </div>
-                <div class="section-group tag-group-exclusive">
-                    <label>年齡 <span class="exclusive-badge">單選</span></label>
-                    <div class="tags-container">
-                        <span class="tag" data-exclusive="age" data-value="嬰兒" onclick="toggleExclusive(this)">嬰兒 (Infant)</span>
-                        <span class="tag" data-exclusive="age" data-value="兒童" onclick="toggleExclusive(this)">兒童 (Child)</span>
-                        <span class="tag" data-exclusive="age" data-value="青少年" onclick="toggleExclusive(this)">青少年 (Teenager)</span>
-                        <span class="tag" data-exclusive="age" data-value="青年" onclick="toggleExclusive(this)">青年 (Young Adult)</span>
-                        <span class="tag" data-exclusive="age" data-value="成人" onclick="toggleExclusive(this)">成人 (Adult)</span>
-                        <span class="tag" data-exclusive="age" data-value="中年" onclick="toggleExclusive(this)">中年 (Middle-aged)</span>
-                        <span class="tag" data-exclusive="age" data-value="老年" onclick="toggleExclusive(this)">老年 (Elderly)</span>
-                    </div>
-                </div>
-            </div>
-            <div class="grid-2">
-                <div class="section-group tag-group-exclusive">
-                    <label>髮型 <span class="exclusive-badge">單選</span></label>
-                    <div class="tags-container">
-                        <span class="tag" data-exclusive="hair" data-value="長髮" onclick="toggleExclusive(this)">長髮 (Long Hair)</span>
-                        <span class="tag" data-exclusive="hair" data-value="短髮" onclick="toggleExclusive(this)">短髮 (Short Hair)</span>
-                        <span class="tag" data-exclusive="hair" data-value="捲髮" onclick="toggleExclusive(this)">捲髮 (Curly Hair)</span>
-                        <span class="tag" data-exclusive="hair" data-value="直髮" onclick="toggleExclusive(this)">直髮 (Straight Hair)</span>
-                        <span class="tag" data-exclusive="hair" data-value="禿頭" onclick="toggleExclusive(this)">禿頭 (Bald)</span>
-                    </div>
-                </div>
-                <div class="section-group tag-group-exclusive">
-                    <label>表情 <span class="exclusive-badge">單選</span></label>
-                    <div class="tags-container">
-                        <span class="tag" data-exclusive="expression" data-value="微笑" onclick="toggleExclusive(this)">微笑 (Smiling)</span>
-                        <span class="tag" data-exclusive="expression" data-value="大笑" onclick="toggleExclusive(this)">大笑 (Laughing)</span>
-                        <span class="tag" data-exclusive="expression" data-value="嚴肅" onclick="toggleExclusive(this)">嚴肅 (Serious)</span>
-                        <span class="tag" data-exclusive="expression" data-value="驚訝" onclick="toggleExclusive(this)">驚訝 (Surprised)</span>
-                        <span class="tag" data-exclusive="expression" data-value="憂鬱" onclick="toggleExclusive(this)">憂鬱 (Sad)</span>
-                        <span class="tag" data-exclusive="expression" data-value="堅定" onclick="toggleExclusive(this)">堅定 (Determined)</span>
-                    </div>
-                </div>
-            </div>
+            <h2 class="card-title">主體描述</h2>
+            <label for="subject">你想生成什麼？（中文描述）</label>
+            <input type="text" id="subject" placeholder="例如：一個可愛的小女孩在森林裡奔跑">
         </div>
+        
         <div class="card">
-            <h2 class="card-title">🎬 第二層：風格、媒介與鏡頭</h2>
+            <h2 class="card-title">👤 人物特徵</h2>
             <div class="grid-2">
                 <div>
-                    <label>藝術風格（多選）</label>
+                    <label>年齡</label>
                     <div class="tags-container">
-                        <span class="tag" data-multi="style" data-value="吉卜力風格" onclick="toggleMulti(this)">吉卜力 (Ghibli)</span>
-                        <span class="tag" data-multi="style" data-value="迪士尼風格" onclick="toggleMulti(this)">迪士尼 (Disney)</span>
-                        <span class="tag" data-multi="style" data-value="皮克斯風格" onclick="toggleMulti(this)">皮克斯 (Pixar)</span>
-                        <span class="tag" data-multi="style" data-value="水彩畫風格" onclick="toggleMulti(this)">水彩 (Watercolor)</span>
-                        <span class="tag" data-multi="style" data-value="油畫風格" onclick="toggleMulti(this)">油畫 (Oil Painting)</span>
-                        <span class="tag" data-multi="style" data-value="賽博龐克風格" onclick="toggleMulti(this)">賽博龐克 (Cyberpunk)</span>
+                        <span class="tag" data-person="infant,嬰兒" onclick="toggleNSFW(this)">👶 嬰兒</span>
+                        <span class="tag" data-person="child,兒童" onclick="toggleNSFW(this)">👧 兒童</span>
+                        <span class="tag" data-person="teenager,青少年" onclick="toggleNSFW(this)">👦 青少年</span>
+                        <span class="tag" data-person="young adult,年輕成人" onclick="toggleNSFW(this)">👱 青年</span>
+                        <span class="tag" data-person="adult,成年人" onclick="toggleNSFW(this)">👨 成人</span>
+                        <span class="tag" data-person="middle-aged,中年人" onclick="toggleNSFW(this)">👨‍🦰 中年</span>
+                        <span class="tag" data-person="elderly,老年人" onclick="toggleNSFW(this)">👴 老年</span>
                     </div>
                 </div>
                 <div>
-                    <label>攝影類型</label>
+                    <label>性別</label>
                     <div class="tags-container">
-                        <span class="tag" data-multi="media" data-value="電影感攝影" onclick="toggleMulti(this)">電影感 (Cinematic)</span>
-                        <span class="tag" data-multi="media" data-value="棚內攝影" onclick="toggleMulti(this)">棚拍 (Studio)</span>
-                        <span class="tag" data-multi="media" data-value="街頭攝影" onclick="toggleMulti(this)">街拍 (Street)</span>
+                        <span class="tag" data-person="male,男性" onclick="toggleNSFW(this)">👨 男性</span>
+                        <span class="tag" data-person="female,女性" onclick="toggleNSFW(this)">👩 女性</span>
+                        <span class="tag" data-person="androgynous,中性" onclick="toggleNSFW(this)">😐 中性</span>
                     </div>
                 </div>
             </div>
             <div class="section-divider"></div>
             <div class="grid-2">
                 <div>
-                    <label>拍攝視角</label>
+                    <label>種族/外貌</label>
                     <div class="tags-container">
-                        <span class="tag" data-multi="camera" data-value="特寫鏡頭" onclick="toggleMulti(this)">特寫 (Close-up)</span>
-                        <span class="tag" data-multi="camera" data-value="半身鏡頭" onclick="toggleMulti(this)">半身 (Medium Shot)</span>
-                        <span class="tag" data-multi="camera" data-value="全身鏡頭" onclick="toggleMulti(this)">全身 (Full Body)</span>
-                        <span class="tag" data-multi="camera" data-value="廣角鏡頭" onclick="toggleMulti(this)">廣角 (Wide Angle)</span>
-                        <span class="tag" data-multi="camera" data-value="鳥瞰視角" onclick="toggleMulti(this)">鳥瞰 (Aerial)</span>
+                        <span class="tag" data-person="East Asian,亞洲人" onclick="toggleNSFW(this)">🌏 亞洲</span>
+                        <span class="tag" data-person="Caucasian,歐美人" onclick="toggleNSFW(this)">🌍 歐美</span>
+                        <span class="tag" data-person="African,非洲人" onclick="toggleNSFW(this)">🌍 非洲</span>
+                        <span class="tag" data-person="Latin American,拉丁裔" onclick="toggleNSFW(this)">🌎 拉丁</span>
                     </div>
                 </div>
                 <div>
-                    <label>構圖方式</label>
+                    <label>髮型</label>
                     <div class="tags-container">
-                        <span class="tag" data-multi="composition" data-value="對稱構圖" onclick="toggleMulti(this)">對稱 (Symmetrical)</span>
-                        <span class="tag" data-multi="composition" data-value="三分法構圖" onclick="toggleMulti(this)">三分法 (Rule of Third)</span>
-                        <span class="tag" data-multi="composition" data-value="留白構圖" onclick="toggleMulti(this)">留白 (Negative Space)</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <h2 class="card-title">💡 第三層：光影與氛圍</h2>
-            <div class="grid-2">
-                <div>
-                    <label>光線條件（多選）</label>
-                    <div class="tags-container">
-                        <span class="tag" data-multi="lighting" data-value="金色陽光" onclick="toggleMulti(this)">金色陽光 (Golden Hour)</span>
-                        <span class="tag" data-multi="lighting" data-value="柔和晨光" onclick="toggleMulti(this)">柔和晨光 (Soft Morning)</span>
-                        <span class="tag" data-multi="lighting" data-value="月光" onclick="toggleMulti(this)">月光 (Moonlight)</span>
-                        <span class="tag" data-multi="lighting" data-value="霓虹燈光" onclick="toggleMulti(this)">霓虹燈光 (Neon)</span>
-                        <span class="tag" data-multi="lighting" data-value="體積光" onclick="toggleMulti(this)">體積光 (Volumetric)</span>
-                        <span class="tag" data-multi="lighting" data-value="輪廓光" onclick="toggleMulti(this)">輪廓光 (Rim Light)</span>
-                    </div>
-                </div>
-                <div>
-                    <label>情緒氛圍（多選）</label>
-                    <div class="tags-container">
-                        <span class="tag" data-multi="mood" data-value="溫馨浪漫" onclick="toggleMulti(this)">溫馨浪漫 (Romantic)</span>
-                        <span class="tag" data-multi="mood" data-value="神秘奇幻" onclick="toggleMulti(this)">神秘奇幻 (Fantasy)</span>
-                        <span class="tag" data-multi="mood" data-value="史詩壯闊" onclick="toggleMulti(this)">史詩壯闊 (Epic)</span>
-                        <span class="tag" data-multi="mood" data-value="清新自然" onclick="toggleMulti(this)">清新自然 (Natural)</span>
-                        <span class="tag" data-multi="mood" data-value="黑暗神秘" onclick="toggleMulti(this)">黑暗神秘 (Dark/Moody)</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <h2 class="card-title">🔧 第四層：品質參數</h2>
-            <div class="grid-2">
-                <div>
-                    <label>品質標籤（多選）</label>
-                    <div class="tags-container">
-                        <span class="tag" data-multi="quality" data-value="8K分辨率" onclick="toggleMulti(this)">8K Resolution</span>
-                        <span class="tag" data-multi="quality" data-value="極度精細" onclick="toggleMulti(this)">極度精細 (Extremely Detailed)</span>
-                        <span class="tag" data-multi="quality" data-value="電影光效" onclick="toggleMulti(this)">電影光效 (Cinematic Lighting)</span>
-                        <span class="tag" data-multi="quality" data-value="景深" onclick="toggleMulti(this)">景深 (Depth of Field)</span>
-                    </div>
-                </div>
-                <div>
-                    <label>場景環境</label>
-                    <div class="tags-container">
-                        <span class="tag" data-multi="environment" data-value="森林" onclick="toggleMulti(this)">森林 (Forest)</span>
-                        <span class="tag" data-multi="environment" data-value="海灘" onclick="toggleMulti(this)">海灘 (Beach)</span>
-                        <span class="tag" data-multi="environment" data-value="都市" onclick="toggleMulti(this)">都市 (City)</span>
-                        <span class="tag" data-multi="environment" data-value="城堡" onclick="toggleMulti(this)">城堡 (Castle)</span>
+                        <span class="tag" data-person="long hair,長髮" onclick="toggleNSFW(this)">💇 長髮</span>
+                        <span class="tag" data-person="short hair,短髮" onclick="toggleNSFW(this)">💇‍♀️ 短髮</span>
+                        <span class="tag" data-person="curly hair,捲髮" onclick="toggleNSFW(this)">🧑‍🦱 捲髮</span>
+                        <span class="tag" data-person="straight hair,直髮" onclick="toggleNSFW(this)">👩 直髮</span>
                     </div>
                 </div>
             </div>
             <div class="section-divider"></div>
-            <label>權重語法 <small>（可選）</small></label>
-            <input type="text" id="weightInput" placeholder="例如：(長髮:1.3), (金色陽光:1.5)">
-            <div class="weight-help">💡 語法：<code>(關鍵字:數字)</code> — 數字 > 1 增加權重</div>
-        </div>
-        <div class="card">
-            <h2 class="card-title">⚠️ 負面提示詞</h2>
-            <textarea id="negativePrompt" placeholder="輸入不想出現的元素..."></textarea>
-            <div class="negative-presets">
-                <span class="negative-preset" onclick="toggleNegativePreset(this)">模糊 (Blur)</span>
-                <span class="negative-preset" onclick="toggleNegativePreset(this)">jpeg偽影 (Artifacts)</span>
-                <span class="negative-preset" onclick="toggleNegativePreset(this)">低質量 (Low Quality)</span>
-                <span class="negative-preset" onclick="toggleNegativePreset(this)">卡通 (Cartoon)</span>
-                <span class="negative-preset" onclick="toggleNegativePreset(this)">塑料皮膚 (Plastic Skin)</span>
-                <span class="negative-preset" onclick="toggleNegativePreset(this)">水印 (Watermark)</span>
+            <div class="grid-2">
+                <div>
+                    <label>表情</label>
+                    <div class="tags-container">
+                        <span class="tag" data-person="smiling,微笑" onclick="toggleNSFW(this)">😊 微笑</span>
+                        <span class="tag" data-person="laughing,大笑" onclick="toggleNSFW(this)">😂 大笑</span>
+                        <span class="tag" data-person="serious,嚴肅" onclick="toggleNSFW(this)">😐 嚴肅</span>
+                        <span class="tag" data-person="surprised,驚訝" onclick="toggleNSFW(this)">😲 驚訝</span>
+                        <span class="tag" data-person="sad,憂鬱" onclick="toggleNSFW(this)">😢 憂鬱</span>
+                    </div>
+                </div>
+                <div>
+                    <label>臉型</label>
+                    <div class="tags-container">
+                        <span class="tag" data-person="round face,圓臉" onclick="toggleNSFW(this)">🟢 圓臉</span>
+                        <span class="tag" data-person="square face,方臉" onclick="toggleNSFW(this)">🟤 方臉</span>
+                        <span class="tag" data-person="oval face,瓜子臉" onclick="toggleNSFW(this)">🟡 瓜子臉</span>
+                    </div>
+                </div>
             </div>
         </div>
+
+        <div class="card">
+            <h2 class="card-title">📱 發布平台</h2>
+            <div class="tags-container">
+                <span class="tag platform-tag" data-platform="facebook" onclick="selectPlatform(this)"><span class="icon">📘</span>Facebook</span>
+                <span class="tag platform-tag" data-platform="instagram" onclick="selectPlatform(this)"><span class="icon">📸</span>Instagram</span>
+                <span class="tag platform-tag" data-platform="youtube" onclick="selectPlatform(this)"><span class="icon">🎬</span>YouTube</span>
+                <span class="tag platform-tag" data-platform="twitter" onclick="selectPlatform(this)"><span class="icon">🐦</span>Twitter/X</span>
+                <span class="tag platform-tag" data-platform="threads" onclick="selectPlatform(this)"><span class="icon">💬</span>Threads</span>
+                <span class="tag platform-tag" data-platform="tiktok" onclick="selectPlatform(this)"><span class="icon">🎵</span>TikTok</span>
+                <span class="tag platform-tag" data-platform="ads" onclick="selectPlatform(this)"><span class="icon">📣</span>廣告</span>
+                <span class="tag platform-tag" data-platform="ecommerce" onclick="selectPlatform(this)"><span class="icon">🛒</span>電商</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">藝術風格</h2>
+            <div class="grid-2">
+                <div>
+                    <label for="artStyle">主要風格</label>
+                    <div class="select-wrapper">
+                        <select id="artStyle">
+                            <option value="">選擇風格...</option>
+                            <optgroup label="動畫風格">
+                                <option value="吉卜力風格，細膩的手繪風格">吉卜力風格</option>
+                                <option value="迪士尼風格">迪士尼風格</option>
+                                <option value="皮克斯風格">皮克斯風格</option>
+                                <option value="新海誠風格，寫實風景">新海誠風格</option>
+                                <option value="日本動漫風格">日本動漫風</option>
+                            </optgroup>
+                            <optgroup label="藝術流派">
+                                <option value="水彩畫風格">水彩畫</option>
+                                <option value="油畫風格">油畫</option>
+                                <option value="浮世繪風格">浮世繪</option>
+                                <option value="賽博龐克風格">賽博龐克</option>
+                                <option value="蒸汽朋克風格">蒸汽朋克</option>
+                            </optgroup>
+                            <optgroup label="攝影風格">
+                                <option value="電影感攝影">電影感攝影</option>
+                                <option value="棚內攝影">棚內攝影</option>
+                                <option value="街頭攝影風格">街頭攝影</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label for="mood">情緒氛圍</label>
+                    <div class="select-wrapper">
+                        <select id="mood">
+                            <option value="">選擇氛圍...</option>
+                            <option value="溫馨浪漫的氛圍">溫馨浪漫 🌸</option>
+                            <option value="神秘奇幻的氛圍">神秘奇幻 ✨</option>
+                            <option value="歡樂活力的氛圍">歡樂活力 ☀️</option>
+                            <option value="憂鬱詩意的氛圍">憂鬱詩意 🌙</option>
+                            <option value="史詩壯闊的氛圍">史詩壯闊 🏔️</option>
+                            <option value="清新自然的氛圍">清新自然 🍃</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">環境與光線 <span class="exclusive-hint">（互斥）</span></h2>
+            <div class="grid-2">
+                <div>
+                    <label for="environment">場景環境</label>
+                    <div class="select-wrapper">
+                        <select id="environment">
+                            <option value="">選擇環境...</option>
+                            <option value="茂密的森林深處">🌲 森林深處</option>
+                            <option value="陽光普照的海岸沙灘">🏖️ 海岸沙灘</option>
+                            <option value="繁華的都市街道">🏙️ 繁華都市</option>
+                            <option value="古老的城堡">🏰 古老城堡</option>
+                            <option value="科幻風格的太空站">🚀 科幻太空站</option>
+                            <option value="溫馨的小屋">🏠 溫馨小屋</option>
+                            <option value="神秘的水下世界">🌊 水下世界</option>
+                            <option value="室內攝影棚">🏠 室內攝影棚</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label for="lighting">光線條件</label>
+                    <div class="select-wrapper">
+                        <select id="lighting">
+                            <option value="">選擇光線...</option>
+                            <option value="金色的陽光灑落">☀️ 金色陽光</option>
+                            <option value="柔和的晨光">🌅 柔和晨光</option>
+                            <option value="皎潔的月光">🌙 月光皎潔</option>
+                            <option value="霓虹絢麗的燈光">💜 霓虹絢麗</option>
+                            <option value="自然的天光">⛅ 自然天光</option>
+                            <option value="浪漫的星光">✨ 浪漫星光</option>
+                            <option value="戲劇性的陰影">🎬 戲劇性陰影</option>
+                            <option value="夢幻的柔光">💕 夢幻柔光</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">視角與構圖</h2>
+            <div class="grid-2">
+                <div>
+                    <label for="camera">拍攝視角</label>
+                    <div class="select-wrapper">
+                        <select id="camera">
+                            <option value="">選擇視角...</option>
+                            <option value="特寫鏡頭">📸 特寫</option>
+                            <option value="半身鏡頭">📸 半身</option>
+                            <option value="全身鏡頭">📸 全身</option>
+                            <option value="廣角鏡頭">🌆 廣角</option>
+                            <option value="鳥瞰視角">🦅 鳥瞰</option>
+                            <option value="仰視角度">🏛️ 仰視</option>
+                            <option value="正面直視">👁️ 正面</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label for="composition">構圖方式</label>
+                    <div class="select-wrapper">
+                        <select id="composition">
+                            <option value="">選擇構圖...</option>
+                            <option value="對稱構圖">⚖️ 對稱</option>
+                            <option value="三分法構圖">📐 三分法</option>
+                            <option value="框架構圖">🖼️ 框架</option>
+                            <option value="留白構圖">🍃 留白</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">進階選項</h2>
+            <label>品質標籤</label>
+            <div class="tags-container">
+                <span class="tag" data-tag="high quality" onclick="toggleTag(this)">💎 高畫質</span>
+                <span class="tag" data-tag="extremely detailed" onclick="toggleTag(this)">🔍 極度精細</span>
+                <span class="tag" data-tag="8k resolution" onclick="toggleTag(this)">🖥️ 8K</span>
+                <span class="tag" data-tag="masterpiece" onclick="toggleTag(this)">🏆 大師級</span>
+                <span class="tag" data-tag="cinematic lighting" onclick="toggleTag(this)">🎥 電影光效</span>
+                <span class="tag" data-tag="volumetric lighting" onclick="toggleTag(this)">🌫️ 體積光</span>
+            </div>
+        </div>
+
         <div class="card nsfw-locked" id="nsfwCard">
-            <h2 class="card-title" style="color: var(--bath-red);">🔞 成人選項</h2>
+            <h2 class="card-title" style="color: var(--bath-red);">🔞 成人選項（密碼解鎖）</h2>
             <p>輸入密碼解鎖</p>
-            <input type="password" id="nsfwPassword" style="max-width:280px;margin:20px auto;display:block;" placeholder="輸入密碼">
+            <input type="password" id="nsfwPassword" placeholder="密碼">
             <button class="btn nsfw-unlock-btn" onclick="unlockNSFW()">解鎖 🔓</button>
-            <p id="nsfwError" style="color:var(--bath-red);display:none;margin-top:14px;">密碼錯誤</p>
+            <p id="nsfwError" style="color: var(--bath-red); display: none; margin-top: 14px;">密碼錯誤</p>
         </div>
+
         <div class="card nsfw-content" id="nsfwContent">
-            <h2 class="card-title" style="color:var(--bath-red);">🔞 成人選項</h2>
-            <div class="nsfw-category">
-                <div class="nsfw-category-title">🟢 輕度 - 服裝 (Light)</div>
+            <h2 class="card-title" style="color: var(--bath-red);">🔞 成人選項（輸入密碼解鎖）</h2>
+            
+            <div style="margin-top: 16px;">
+                <label>🔴 重度</label>
                 <div class="tags-container">
-                    <span class="tag level-light" data-nsfw="休閒服 (Casual Wear)" onclick="toggleNSFW(this)">休閒服</span>
-                    <span class="tag level-light" data-nsfw="正裝 (Formal Wear)" onclick="toggleNSFW(this)">正裝</span>
-                    <span class="tag level-light" data-nsfw="運動服 (Sportswear)" onclick="toggleNSFW(this)">運動服</span>
-                    <span class="tag level-light" data-nsfw="泳裝 (Swimsuit)" onclick="toggleNSFW(this)">泳裝</span>
-                    <span class="tag level-light" data-nsfw="睡衣 (Sleepwear)" onclick="toggleNSFW(this)">睡衣</span>
-                    <span class="tag level-light" data-nsfw="內搭衣 (Undergarment)" onclick="toggleNSFW(this)">內搭衣</span>
+                    <span class="tag level-heavy" data-nsfw="full body naked,全身赤裸" onclick="toggleNSFW(this)">全身赤裸</span>
+                    <span class="tag level-heavy" data-nsfw="erotic pose,性感姿勢" onclick="toggleNSFW(this)">性感姿勢</span>
+                    <span class="tag level-heavy" data-nsfw="bedroom scene,床戲場景" onclick="toggleNSFW(this)">床戲場景</span>
+                    <span class="tag level-heavy" data-nsfw="wet body,濕身效果" onclick="toggleNSFW(this)">濕身</span>
+                    <span class="tag level-heavy" data-nsfw="bikini,比基尼" onclick="toggleNSFW(this)">比基尼</span>
+                    <span class="tag level-heavy" data-nsfw="lingerie,性感內衣" onclick="toggleNSFW(this)">性感內衣</span>
                 </div>
             </div>
-            <div class="nsfw-category">
-                <div class="nsfw-category-title">🟡 中度 - 服裝 (Medium)</div>
+
+            <div style="margin-top: 16px;">
+                <label>🟡 中度</label>
                 <div class="tags-container">
-                    <span class="tag level-medium" data-nsfw="內褲 (Underwear)" onclick="toggleNSFW(this)">內褲</span>
-                    <span class="tag level-medium" data-nsfw="半裸 (Semi-Nude)" onclick="toggleNSFW(this)">半裸</span>
-                    <span class="tag level-medium" data-nsfw="比基尼 (Bikini)" onclick="toggleNSFW(this)">比基尼</span>
-                    <span class="tag level-medium" data-nsfw="性感內衣 (Lingerie)" onclick="toggleNSFW(this)">性感內衣</span>
-                    <span class="tag level-medium" data-nsfw="露腰 (Showing Midriff)" onclick="toggleNSFW(this)">露腰</span>
-                    <span class="tag level-medium" data-nsfw="迷你裙 (Mini Skirt)" onclick="toggleNSFW(this)">迷你裙</span>
-                    <span class="tag level-medium" data-nsfw="透明衣物 (Transparent Clothing)" onclick="toggleNSFW(this)">透明衣物</span>
+                    <span class="tag level-medium" data-nsfw="underwear,內褲" onclick="toggleNSFW(this)">內褲</span>
+                    <span class="tag level-medium" data-nsfw="semi-nude,半裸" onclick="toggleNSFW(this)">半裸</span>
+                    <span class="tag level-medium" data-nsfw="showing midriff,露腰" onclick="toggleNSFW(this)">露腰</span>
+                    <span class="tag level-medium" data-nsfw="cleavage,事業線" onclick="toggleNSFW(this)">事業線</span>
+                    <span class="tag level-medium" data-nsfw="short skirt,迷你裙" onclick="toggleNSFW(this)">迷你裙</span>
+                    <span class="tag level-medium" data-nsfw="transparent clothing,透明衣物" onclick="toggleNSFW(this)">透明衣物</span>
                 </div>
             </div>
-            <div class="nsfw-category">
-                <div class="nsfw-category-title">🔴 重度 - 身體 (Heavy)</div>
+
+            <div style="margin-top: 16px;">
+                <label>🟢 輕度</label>
                 <div class="tags-container">
-                    <span class="tag level-heavy" data-nsfw="全身赤裸 (Full Nude)" onclick="toggleNSFW(this)">全身赤裸</span>
-                    <span class="tag level-heavy" data-nsfw="性感姿勢 (Erotic Pose)" onclick="toggleNSFW(this)">性感姿勢</span>
-                    <span class="tag level-heavy" data-nsfw="濕身效果 (Wet Look)" onclick="toggleNSFW(this)">濕身</span>
-                    <span class="tag level-heavy" data-nsfw="內衣秀 (Lingerie Show)" onclick="toggleNSFW(this)">內衣秀</span>
+                    <span class="tag level-light" data-nsfw="casual wear,休閒服" onclick="toggleNSFW(this)">休閒服</span>
+                    <span class="tag level-light" data-nsfw="formal wear,正裝" onclick="toggleNSFW(this)">正裝</span>
+                    <span class="tag level-light" data-nsfw="sportswear,運動服" onclick="toggleNSFW(this)">運動服</span>
+                    <span class="tag level-light" data-nsfw="swimsuit,泳裝" onclick="toggleNSFW(this)">泳裝</span>
+                    <span class="tag level-light" data-nsfw="sleepwear,睡衣" onclick="toggleNSFW(this)">睡衣</span>
+                    <span class="tag level-light" data-nsfw="traditional,傳統服飾" onclick="toggleNSFW(this)">傳統服飾</span>
                 </div>
             </div>
-            <div class="nsfw-category">
-                <div class="nsfw-category-title">👤 身體部位特寫 (Body Parts)</div>
+
+            <div style="margin-top: 16px;">
+                <label>身體部位特寫</label>
                 <div class="tags-container">
-                    <span class="tag" data-nsfw="臉部特寫 (Face Close-up)" onclick="toggleNSFW(this)">臉部特寫</span>
-                    <span class="tag" data-nsfw="眼睛特寫 (Eyes Close-up)" onclick="toggleNSFW(this)">眼睛特寫</span>
-                    <span class="tag" data-nsfw="嘴唇特寫 (Lips Close-up)" onclick="toggleNSFW(this)">嘴唇特寫</span>
-                    <span class="tag" data-nsfw="胸部特寫 (Breasts)" onclick="toggleNSFW(this)">胸部</span>
-                    <span class="tag" data-nsfw="臀部特寫 (Buttocks)" onclick="toggleNSFW(this)">臀部</span>
-                    <span class="tag" data-nsfw="腿部特寫 (Legs)" onclick="toggleNSFW(this)">腿部</span>
-                    <span class="tag" data-nsfw="手部特寫 (Hands)" onclick="toggleNSFW(this)">手部</span>
-                    <span class="tag" data-nsfw="腳部特寫 (Feet)" onclick="toggleNSFW(this)">腳部</span>
+                    <span class="tag" data-nsfw="face close-up,五官清晰" onclick="toggleNSFW(this)">臉部特寫</span>
+                    <span class="tag" data-nsfw="eyes close-up,大眼睛" onclick="toggleNSFW(this)">眼睛特寫</span>
+                    <span class="tag" data-nsfw="lips close-up,豐唇" onclick="toggleNSFW(this)">嘴唇特寫</span>
+                    <span class="tag" data-nsfw="breasts,胸部" onclick="toggleNSFW(this)">胸部</span>
+                    <span class="tag" data-nsfw="butt,臀部" onclick="toggleNSFW(this)">臀部</span>
+                    <span class="tag" data-nsfw="legs,美腿" onclick="toggleNSFW(this)">腿部</span>
                 </div>
             </div>
-            <div class="nsfw-category">
-                <div class="nsfw-category-title">🏠 場景氛圍 (Scene)</div>
+
+            <div style="margin-top: 16px;">
+                <label>場景氛圍</label>
                 <div class="tags-container">
-                    <span class="tag" data-nsfw="浪漫晚餐 (Romantic Dinner)" onclick="toggleNSFW(this)">浪漫晚餐</span>
-                    <span class="tag" data-nsfw="夜店 (Night Club)" onclick="toggleNSFW(this)">夜店</span>
-                    <span class="tag" data-nsfw="海灘日落 (Beach Sunset)" onclick="toggleNSFW(this)">海灘日落</span>
-                    <span class="tag" data-nsfw="飯店房間 (Hotel Room)" onclick="toggleNSFW(this)">飯店房間</span>
-                    <span class="tag" data-nsfw="浴缸 (Bathtub)" onclick="toggleNSFW(this)">浴缸</span>
-                    <span class="tag" data-nsfw="淋浴 (Shower)" onclick="toggleNSFW(this)">淋浴</span>
-                    <span class="tag" data-nsfw="床鋪 (Bed)" onclick="toggleNSFW(this)">床鋪</span>
+                    <span class="tag" data-nsfw="romantic dinner,浪漫晚餐" onclick="toggleNSFW(this)">浪漫晚餐</span>
+                    <span class="tag" data-nsfw="night club,夜店" onclick="toggleNSFW(this)">夜店</span>
+                    <span class="tag" data-nsfw="beach sunset,海灘日落" onclick="toggleNSFW(this)">海灘日落</span>
+                    <span class="tag" data-nsfw="hotel room,飯店房間" onclick="toggleNSFW(this)">飯店房間</span>
+                    <span class="tag" data-nsfw="bathtub,浴缸" onclick="toggleNSFW(this)">浴缸</span>
+                    <span class="tag" data-nsfw="shower,淋浴" onclick="toggleNSFW(this)">淋浴</span>
                 </div>
             </div>
-            <div class="nsfw-category">
-                <div class="nsfw-category-title">💪 姿勢/動作 (Pose/Action)</div>
+
+            <div style="margin-top: 16px;">
+                <label>姿勢/動作</label>
                 <div class="tags-container">
-                    <span class="tag" data-nsfw="坐姿 (Sitting)" onclick="toggleNSFW(this)">坐姿</span>
-                    <span class="tag" data-nsfw="躺姿 (Lying Down)" onclick="toggleNSFW(this)">躺姿</span>
-                    <span class="tag" data-nsfw="站立 (Standing)" onclick="toggleNSFW(this)">站立</span>
-                    <span class="tag" data-nsfw="彎腰 (Bending)" onclick="toggleNSFW(this)">彎腰</span>
-                    <span class="tag" data-nsfw="跪姿 (Kneeling)" onclick="toggleNSFW(this)">跪姿</span>
-                    <span class="tag" data-nsfw="趴姿 (Prone)" onclick="toggleNSFW(this)">趴姿</span>
+                    <span class="tag" data-nsfw="sitting pose,坐姿" onclick="toggleNSFW(this)">坐姿</span>
+                    <span class="tag" data-nsfw="lying down,躺姿" onclick="toggleNSFW(this)">躺姿</span>
+                    <span class="tag" data-nsfw="standing,站立" onclick="toggleNSFW(this)">站立</span>
+                    <span class="tag" data-nsfw="bending,彎腰" onclick="toggleNSFW(this)">彎腰</span>
+                    <span class="tag" data-nsfw="legs apart,雙腿打開" onclick="toggleNSFW(this)">雙腿打開</span>
+                    <span class="tag" data-nsfw="reaching,伸手" onclick="toggleNSFW(this)">伸手</span>
                 </div>
             </div>
-            <div class="nsfw-category">
-                <div class="nsfw-category-title">🎨 風格要求 (Style)</div>
+
+            <div style="margin-top: 16px;">
+                <label>風格要求</label>
                 <div class="tags-container">
-                    <span class="tag" data-nsfw="柔光 (Soft Lighting)" onclick="toggleNSFW(this)">柔光</span>
-                    <span class="tag" data-nsfw="黑暗情緒 (Dark Moody)" onclick="toggleNSFW(this)">黑暗情緒</span>
-                    <span class="tag" data-nsfw="柔焦 (Soft Focus)" onclick="toggleNSFW(this)">柔焦</span>
-                    <span class="tag" data-nsfw="藝術感 (Artistic)" onclick="toggleNSFW(this)">藝術感</span>
-                    <span class="tag" data-nsfw="美顏濾鏡
+                    <span class="tag" data-nsfw="soft lighting,柔光" onclick="toggleNSFW(this)">柔光</span>
+                    <span class="tag" data-nsfw="dark moody,黑暗情緒" onclick="toggleNSFW(this)">黑暗情緒</span>
+                    <span class="tag" data-nsfw="soft focus,柔焦" onclick="toggleNSFW(this)">柔焦</span>
+                    <span class="tag" data-nsfw="artistic,藝術感" onclick="toggleNSFW(this)">藝術感</span>
+                    <span class="tag" data-nsfw="beauty filter,美顏濾鏡" onclick="toggleNSFW(this)">美顏濾鏡</span>
+                </div>
+            </div>
+
+            <div class="info-box" style="margin-top: 20px;">
+                ⚠️ <strong>注意：</strong>請確保生成的內容符合當地法規。
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">✨ 生成的提示詞</h2>
+            <textarea id="output" class="output-textarea" placeholder="點擊「生成提示詞」按鈕..."></textarea>
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="generatePrompt()">✨ 生成</button>
+                <button class="btn btn-copy" onclick="copyToClipboard()">📋 複製</button>
+                <button class="btn btn-clear" onclick="clearAll()">🗑️ 清除</button>
+            </div>
+            <div class="info-box">
+                💡 <strong>Z-Image 技巧：</strong>
+                <div class="tips">
+                    <div class="tip">中文 Prompt 完全支援</div>
+                    <div class="tip">越詳細越好</div>
+                    <div class="tip">guidance_scale 設 0</div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer><p>✨ 靈感來自湯屋 | Made with 💙 for Z-Image Users</p></footer>
+    <div class="toast" id="toast">已複製！</div>
+    <script>
+        let selectedTags = new Set();
+        let selectedNSFW = new Set();
+        let selectedPerson = new Set();
+        let selectedPlatforms = new Set();
+        
+        const platformPrompts = {
+            facebook: "適合 Facebook 受眾，家庭友善，warm colors, family-friendly",
+            instagram: "Instagram 風格，時尚潮流，vibrant colors, trending",
+            youtube: "YouTube 縮圖風格，dramatic lighting, eye-catching",
+            twitter: "Twitter/X 風格，meme 感，bold",
+            ads: "廣告風格，professional, clean design",
+            ecommerce: "電商風格，product-focused, clean"
+        };
+
+        function selectPlatform(el) {
+            el.classList.toggle('selected');
+            const platform = el.dataset.platform;
+            if (selectedPlatforms.has(platform)) selectedPlatforms.delete(platform);
+            else selectedPlatforms.add(platform);
+        }
+
+        function toggleTag(el) {
+            el.classList.toggle('selected');
+            const tag = el.dataset.tag;
+            if (selectedTags.has(tag)) selectedTags.delete(tag);
+            else selectedTags.add(tag);
+        }
+
+        function toggleNSFW(el) {
+            el.classList.toggle('selected');
+            const val = el.dataset.nsfw || el.dataset.person;
+            if (val) {
+                if (selectedNSFW.has(val)) selectedNSFW.delete(val);
+                else selectedNSFW.add(val);
+            }
+        }
+
+        function unlockNSFW() {
+            const password = document.getElementById('nsfwPassword').value;
+            if (password === 'adult') {
+                document.getElementById('nsfwCard').style.display = 'none';
+                document.getElementById('nsfwContent').classList.add('unlocked');
+            } else {
+                document.getElementById('nsfwError').style.display = 'block';
+            }
+        }
+
+        function generatePrompt() {
+            const parts = [];
+            const subject = document.getElementById('subject').value.trim();
+            if (subject) parts.push(subject);
+            
+            if (selectedPerson.size > 0) parts.push(Array.from(selectedPerson).join(', '));
+            selectedPlatforms.forEach(p => { if (platformPrompts[p]) parts.push(platformPrompts[p]); });
+            
+            const artStyle = document.getElementById('artStyle').value;
+            if (artStyle) parts.push(artStyle);
+            const mood = document.getElementById('mood').value;
+            if (mood) parts.push(mood);
+            const env = document.getElementById('environment').value;
+            if (env) parts.push(env);
+            const light = document.getElementById('lighting').value;
+            if (light) parts.push(light);
+            const cam = document.getElementById('camera').value;
+            if (cam) parts.push(cam);
+            const comp = document.getElementById('composition').value;
+            if (comp) parts.push(comp);
+            
+            if (selectedTags.size > 0) parts.push(Array.from(selectedTags).join(', '));
+            if (selectedNSFW.size > 0) parts.push(Array.from(selectedNSFW).join(', '));
+            
+            let result = parts.join(', ');
+            if (result && !result.endsWith('high quality')) result += ', high quality, detailed, masterpiece';
+            
+            document.getElementById('output').value = result || '請填寫主體描述';
+        }
+
+        function copyToClipboard() {
+            const text = document.getElementById('output').value;
+            if (!text || text === '請填寫主體描述') return;
+            navigator.clipboard.writeText(text).then(() => showToast('已複製！'));
+        }
+
+        function clearAll() {
+            ['subject', 'artStyle', 'mood', 'environment', 'lighting', 'camera', 'composition', 'output'].forEach(id => document.getElementById(id).value = '');
+            document.querySelectorAll('.tag.selected').forEach(tag => tag.classList.remove('selected'));
+            selectedTags.clear(); selectedNSFW.clear(); selectedPerson.clear(); selectedPlatforms.clear();
+            showToast('已清除！');
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 2500);
+        }
+    </script>
+</body>
+</html>
