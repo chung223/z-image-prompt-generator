@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✨ Z-Image 提示詞生成器 v2.0</title>
+    <title>✨ Z-Image 提示詞生成器 v2.1</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;700&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root { --bath-blue: #0a1628; --bath-indigo: #1a2a4a; --bath-lantern: #ff6b35; --bath-lantern-light: #ffa500; --bath-cream: #f5e6d3; --bath-gold: #d4a574; --bath-red: #c41e3a; --text-light: #e8d5c4; }
@@ -76,35 +76,35 @@
     <div class="steam"><div class="steam-particle sp1"></div><div class="steam-particle sp2"></div><div class="steam-particle sp3"></div><div class="steam-particle sp4"></div><div class="steam-particle sp5"></div></div>
     <div class="lantern-glow"></div>
     <header>
-        <h1>✨ Z-Image <span class="version-badge">v2.0</span></h1>
+        <h1>✨ Z-Image <span class="version-badge">v2.1</span></h1>
         <p class="subtitle">Turbo Prompt Generator</p>
     </header>
     <main>
         <div class="card">
             <h2 class="card-title">👤 第一層：主體與動作</h2>
-            <p class="card-subtitle">Z-Image 核心：誰 + 做什麼</p>
-            <label>主體描述</label>
-            <input type="text" id="subject" placeholder="例如：一位年輕女性，在森林中奔跑">
+            <p class="card-subtitle">Z-Image 核心：誰 + 做什麼，越詳細越好</p>
+            <label>主體描述（必填）</label>
+            <input type="text" id="subject" placeholder="例如：一位年輕女性，有著赤褐色頭髮，身穿皮夾克，在森林中奔跑">
             <div class="section-divider"></div>
             <div class="grid-2">
                 <div class="section-group tag-group-exclusive">
                     <label>性別 <span class="exclusive-badge">單選</span></label>
                     <div class="tags-container">
-                        <span class="tag" data-exclusive="gender" data-value="男性" onclick="toggleExclusive(this)">👨 男性</span>
-                        <span class="tag" data-exclusive="gender" data-value="女性" onclick="toggleExclusive(this)">👩 女性</span>
-                        <span class="tag" data-exclusive="gender" data-value="中性" onclick="toggleExclusive(this)">😐 中性</span>
+                        <span class="tag" data-exclusive="gender" data-value="男性" onclick="toggleExclusive(this)">男性 (Male)</span>
+                        <span class="tag" data-exclusive="gender" data-value="女性" onclick="toggleExclusive(this)">女性 (Female)</span>
+                        <span class="tag" data-exclusive="gender" data-value="中性" onclick="toggleExclusive(this)">中性 (Androgynous)</span>
                     </div>
                 </div>
                 <div class="section-group tag-group-exclusive">
                     <label>年齡 <span class="exclusive-badge">單選</span></label>
                     <div class="tags-container">
-                        <span class="tag" data-exclusive="age" data-value="嬰兒" onclick="toggleExclusive(this)">👶</span>
-                        <span class="tag" data-exclusive="age" data-value="兒童" onclick="toggleExclusive(this)">👧</span>
-                        <span class="tag" data-exclusive="age" data-value="青少年" onclick="toggleExclusive(this)">👦</span>
-                        <span class="tag" data-exclusive="age" data-value="青年" onclick="toggleExclusive(this)">👱</span>
-                        <span class="tag" data-exclusive="age" data-value="成人" onclick="toggleExclusive(this)">👨</span>
-                        <span class="tag" data-exclusive="age" data-value="中年" onclick="toggleExclusive(this)">👨‍🦰</span>
-                        <span class="tag" data-exclusive="age" data-value="老年" onclick="toggleExclusive(this)">👴</span>
+                        <span class="tag" data-exclusive="age" data-value="嬰兒" onclick="toggleExclusive(this)">嬰兒 (Infant)</span>
+                        <span class="tag" data-exclusive="age" data-value="兒童" onclick="toggleExclusive(this)">兒童 (Child)</span>
+                        <span class="tag" data-exclusive="age" data-value="青少年" onclick="toggleExclusive(this)">青少年 (Teenager)</span>
+                        <span class="tag" data-exclusive="age" data-value="青年" onclick="toggleExclusive(this)">青年 (Young Adult)</span>
+                        <span class="tag" data-exclusive="age" data-value="成人" onclick="toggleExclusive(this)">成人 (Adult)</span>
+                        <span class="tag" data-exclusive="age" data-value="中年" onclick="toggleExclusive(this)">中年 (Middle-aged)</span>
+                        <span class="tag" data-exclusive="age" data-value="老年" onclick="toggleExclusive(this)">老年 (Elderly)</span>
                     </div>
                 </div>
             </div>
@@ -112,20 +112,22 @@
                 <div class="section-group tag-group-exclusive">
                     <label>髮型 <span class="exclusive-badge">單選</span></label>
                     <div class="tags-container">
-                        <span class="tag" data-exclusive="hair" data-value="長髮" onclick="toggleExclusive(this)">長髮</span>
-                        <span class="tag" data-exclusive="hair" data-value="短髮" onclick="toggleExclusive(this)">短髮</span>
-                        <span class="tag" data-exclusive="hair" data-value="捲髮" onclick="toggleExclusive(this)">捲髮</span>
-                        <span class="tag" data-exclusive="hair" data-value="直髮" onclick="toggleExclusive(this)">直髮</span>
+                        <span class="tag" data-exclusive="hair" data-value="長髮" onclick="toggleExclusive(this)">長髮 (Long Hair)</span>
+                        <span class="tag" data-exclusive="hair" data-value="短髮" onclick="toggleExclusive(this)">短髮 (Short Hair)</span>
+                        <span class="tag" data-exclusive="hair" data-value="捲髮" onclick="toggleExclusive(this)">捲髮 (Curly Hair)</span>
+                        <span class="tag" data-exclusive="hair" data-value="直髮" onclick="toggleExclusive(this)">直髮 (Straight Hair)</span>
+                        <span class="tag" data-exclusive="hair" data-value="禿頭" onclick="toggleExclusive(this)">禿頭 (Bald)</span>
                     </div>
                 </div>
                 <div class="section-group tag-group-exclusive">
                     <label>表情 <span class="exclusive-badge">單選</span></label>
                     <div class="tags-container">
-                        <span class="tag" data-exclusive="expression" data-value="微笑" onclick="toggleExclusive(this)">😊</span>
-                        <span class="tag" data-exclusive="expression" data-value="大笑" onclick="toggleExclusive(this)">😂</span>
-                        <span class="tag" data-exclusive="expression" data-value="嚴肅" onclick="toggleExclusive(this)">😐</span>
-                        <span class="tag" data-exclusive="expression" data-value="驚訝" onclick="toggleExclusive(this)">😲</span>
-                        <span class="tag" data-exclusive="expression" data-value="憂鬱" onclick="toggleExclusive(this)">😢</span>
+                        <span class="tag" data-exclusive="expression" data-value="微笑" onclick="toggleExclusive(this)">微笑 (Smiling)</span>
+                        <span class="tag" data-exclusive="expression" data-value="大笑" onclick="toggleExclusive(this)">大笑 (Laughing)</span>
+                        <span class="tag" data-exclusive="expression" data-value="嚴肅" onclick="toggleExclusive(this)">嚴肅 (Serious)</span>
+                        <span class="tag" data-exclusive="expression" data-value="驚訝" onclick="toggleExclusive(this)">驚訝 (Surprised)</span>
+                        <span class="tag" data-exclusive="expression" data-value="憂鬱" onclick="toggleExclusive(this)">憂鬱 (Sad)</span>
+                        <span class="tag" data-exclusive="expression" data-value="堅定" onclick="toggleExclusive(this)">堅定 (Determined)</span>
                     </div>
                 </div>
             </div>
@@ -136,41 +138,41 @@
                 <div>
                     <label>藝術風格（多選）</label>
                     <div class="tags-container">
-                        <span class="tag" data-multi="style" data-value="吉卜力風格" onclick="toggleMulti(this)">吉卜力</span>
-                        <span class="tag" data-multi="style" data-value="迪士尼風格" onclick="toggleMulti(this)">迪士尼</span>
-                        <span class="tag" data-multi="style" data-value="皮克斯風格" onclick="toggleMulti(this)">皮克斯</span>
-                        <span class="tag" data-multi="style" data-value="水彩畫風格" onclick="toggleMulti(this)">水彩</span>
-                        <span class="tag" data-multi="style" data-value="油畫風格" onclick="toggleMulti(this)">油畫</span>
-                        <span class="tag" data-multi="style" data-value="賽博龐克風格" onclick="toggleMulti(this)">賽博龐克</span>
+                        <span class="tag" data-multi="style" data-value="吉卜力風格" onclick="toggleMulti(this)">吉卜力 (Ghibli)</span>
+                        <span class="tag" data-multi="style" data-value="迪士尼風格" onclick="toggleMulti(this)">迪士尼 (Disney)</span>
+                        <span class="tag" data-multi="style" data-value="皮克斯風格" onclick="toggleMulti(this)">皮克斯 (Pixar)</span>
+                        <span class="tag" data-multi="style" data-value="水彩畫風格" onclick="toggleMulti(this)">水彩 (Watercolor)</span>
+                        <span class="tag" data-multi="style" data-value="油畫風格" onclick="toggleMulti(this)">油畫 (Oil Painting)</span>
+                        <span class="tag" data-multi="style" data-value="賽博龐克風格" onclick="toggleMulti(this)">賽博龐克 (Cyberpunk)</span>
                     </div>
                 </div>
                 <div>
                     <label>攝影類型</label>
                     <div class="tags-container">
-                        <span class="tag" data-multi="media" data-value="電影感攝影" onclick="toggleMulti(this)">電影感</span>
-                        <span class="tag" data-multi="media" data-value="棚內攝影" onclick="toggleMulti(this)">棚拍</span>
-                        <span class="tag" data-multi="media" data-value="街頭攝影" onclick="toggleMulti(this)">街拍</span>
+                        <span class="tag" data-multi="media" data-value="電影感攝影" onclick="toggleMulti(this)">電影感 (Cinematic)</span>
+                        <span class="tag" data-multi="media" data-value="棚內攝影" onclick="toggleMulti(this)">棚拍 (Studio)</span>
+                        <span class="tag" data-multi="media" data-value="街頭攝影" onclick="toggleMulti(this)">街拍 (Street)</span>
                     </div>
                 </div>
             </div>
             <div class="section-divider"></div>
             <div class="grid-2">
                 <div>
-                    <label>視角</label>
+                    <label>拍攝視角</label>
                     <div class="tags-container">
-                        <span class="tag" data-multi="camera" data-value="特寫鏡頭" onclick="toggleMulti(this)">特寫</span>
-                        <span class="tag" data-multi="camera" data-value="半身鏡頭" onclick="toggleMulti(this)">半身</span>
-                        <span class="tag" data-multi="camera" data-value="全身鏡頭" onclick="toggleMulti(this)">全身</span>
-                        <span class="tag" data-multi="camera" data-value="廣角鏡頭" onclick="toggleMulti(this)">廣角</span>
-                        <span class="tag" data-multi="camera" data-value="鳥瞰視角" onclick="toggleMulti(this)">鳥瞰</span>
+                        <span class="tag" data-multi="camera" data-value="特寫鏡頭" onclick="toggleMulti(this)">特寫 (Close-up)</span>
+                        <span class="tag" data-multi="camera" data-value="半身鏡頭" onclick="toggleMulti(this)">半身 (Medium Shot)</span>
+                        <span class="tag" data-multi="camera" data-value="全身鏡頭" onclick="toggleMulti(this)">全身 (Full Body)</span>
+                        <span class="tag" data-multi="camera" data-value="廣角鏡頭" onclick="toggleMulti(this)">廣角 (Wide Angle)</span>
+                        <span class="tag" data-multi="camera" data-value="鳥瞰視角" onclick="toggleMulti(this)">鳥瞰 (Aerial)</span>
                     </div>
                 </div>
                 <div>
-                    <label>構圖</label>
+                    <label>構圖方式</label>
                     <div class="tags-container">
-                        <span class="tag" data-multi="composition" data-value="對稱構圖" onclick="toggleMulti(this)">對稱</span>
-                        <span class="tag" data-multi="composition" data-value="三分法構圖" onclick="toggleMulti(this)">三分法</span>
-                        <span class="tag" data-multi="composition" data-value="留白構圖" onclick="toggleMulti(this)">留白</span>
+                        <span class="tag" data-multi="composition" data-value="對稱構圖" onclick="toggleMulti(this)">對稱 (Symmetrical)</span>
+                        <span class="tag" data-multi="composition" data-value="三分法構圖" onclick="toggleMulti(this)">三分法 (Rule of Third)</span>
+                        <span class="tag" data-multi="composition" data-value="留白構圖" onclick="toggleMulti(this)">留白 (Negative Space)</span>
                     </div>
                 </div>
             </div>
@@ -179,24 +181,24 @@
             <h2 class="card-title">💡 第三層：光影與氛圍</h2>
             <div class="grid-2">
                 <div>
-                    <label>光線（多選）</label>
+                    <label>光線條件（多選）</label>
                     <div class="tags-container">
-                        <span class="tag" data-multi="lighting" data-value="金色陽光" onclick="toggleMulti(this)">☀️</span>
-                        <span class="tag" data-multi="lighting" data-value="柔和晨光" onclick="toggleMulti(this)">🌅</span>
-                        <span class="tag" data-multi="lighting" data-value="月光" onclick="toggleMulti(this)">🌙</span>
-                        <span class="tag" data-multi="lighting" data-value="霓虹燈光" onclick="toggleMulti(this)">💜</span>
-                        <span class="tag" data-multi="lighting" data-value="體積光" onclick="toggleMulti(this)">🌫️</span>
-                        <span class="tag" data-multi="lighting" data-value="輪廓光" onclick="toggleMulti(this)">👤</span>
+                        <span class="tag" data-multi="lighting" data-value="金色陽光" onclick="toggleMulti(this)">金色陽光 (Golden Hour)</span>
+                        <span class="tag" data-multi="lighting" data-value="柔和晨光" onclick="toggleMulti(this)">柔和晨光 (Soft Morning)</span>
+                        <span class="tag" data-multi="lighting" data-value="月光" onclick="toggleMulti(this)">月光 (Moonlight)</span>
+                        <span class="tag" data-multi="lighting" data-value="霓虹燈光" onclick="toggleMulti(this)">霓虹燈光 (Neon)</span>
+                        <span class="tag" data-multi="lighting" data-value="體積光" onclick="toggleMulti(this)">體積光 (Volumetric)</span>
+                        <span class="tag" data-multi="lighting" data-value="輪廓光" onclick="toggleMulti(this)">輪廓光 (Rim Light)</span>
                     </div>
                 </div>
                 <div>
-                    <label>氛圍（多選）</label>
+                    <label>情緒氛圍（多選）</label>
                     <div class="tags-container">
-                        <span class="tag" data-multi="mood" data-value="溫馨浪漫" onclick="toggleMulti(this)">🌸</span>
-                        <span class="tag" data-multi="mood" data-value="神秘奇幻" onclick="toggleMulti(this)">✨</span>
-                        <span class="tag" data-multi="mood" data-value="史詩壯闊" onclick="toggleMulti(this)">🏔️</span>
-                        <span class="tag" data-multi="mood" data-value="清新自然" onclick="toggleMulti(this)">🍃</span>
-                        <span class="tag" data-multi="mood" data-value="黑暗神秘" onclick="toggleMulti(this)">🌑</span>
+                        <span class="tag" data-multi="mood" data-value="溫馨浪漫" onclick="toggleMulti(this)">溫馨浪漫 (Romantic)</span>
+                        <span class="tag" data-multi="mood" data-value="神秘奇幻" onclick="toggleMulti(this)">神秘奇幻 (Fantasy)</span>
+                        <span class="tag" data-multi="mood" data-value="史詩壯闊" onclick="toggleMulti(this)">史詩壯闊 (Epic)</span>
+                        <span class="tag" data-multi="mood" data-value="清新自然" onclick="toggleMulti(this)">清新自然 (Natural)</span>
+                        <span class="tag" data-multi="mood" data-value="黑暗神秘" onclick="toggleMulti(this)">黑暗神秘 (Dark/Moody)</span>
                     </div>
                 </div>
             </div>
@@ -205,21 +207,21 @@
             <h2 class="card-title">🔧 第四層：品質參數</h2>
             <div class="grid-2">
                 <div>
-                    <label>品質（多選）</label>
+                    <label>品質標籤（多選）</label>
                     <div class="tags-container">
-                        <span class="tag" data-multi="quality" data-value="8K分辨率" onclick="toggleMulti(this)">8K</span>
-                        <span class="tag" data-multi="quality" data-value="極度精細" onclick="toggleMulti(this)">極細</span>
-                        <span class="tag" data-multi="quality" data-value="電影光效" onclick="toggleMulti(this)">電影光</span>
-                        <span class="tag" data-multi="quality" data-value="景深" onclick="toggleMulti(this)">景深</span>
+                        <span class="tag" data-multi="quality" data-value="8K分辨率" onclick="toggleMulti(this)">8K Resolution</span>
+                        <span class="tag" data-multi="quality" data-value="極度精細" onclick="toggleMulti(this)">極度精細 (Extremely Detailed)</span>
+                        <span class="tag" data-multi="quality" data-value="電影光效" onclick="toggleMulti(this)">電影光效 (Cinematic Lighting)</span>
+                        <span class="tag" data-multi="quality" data-value="景深" onclick="toggleMulti(this)">景深 (Depth of Field)</span>
                     </div>
                 </div>
                 <div>
-                    <label>環境</label>
+                    <label>場景環境</label>
                     <div class="tags-container">
-                        <span class="tag" data-multi="environment" data-value="森林" onclick="toggleMulti(this)">🌲</span>
-                        <span class="tag" data-multi="environment" data-value="海灘" onclick="toggleMulti(this)">🏖️</span>
-                        <span class="tag" data-multi="environment" data-value="都市" onclick="toggleMulti(this)">🏙️</span>
-                        <span class="tag" data-multi="environment" data-value="城堡" onclick="toggleMulti(this)">🏰</span>
+                        <span class="tag" data-multi="environment" data-value="森林" onclick="toggleMulti(this)">森林 (Forest)</span>
+                        <span class="tag" data-multi="environment" data-value="海灘" onclick="toggleMulti(this)">海灘 (Beach)</span>
+                        <span class="tag" data-multi="environment" data-value="都市" onclick="toggleMulti(this)">都市 (City)</span>
+                        <span class="tag" data-multi="environment" data-value="城堡" onclick="toggleMulti(this)">城堡 (Castle)</span>
                     </div>
                 </div>
             </div>
@@ -232,12 +234,12 @@
             <h2 class="card-title">⚠️ 負面提示詞</h2>
             <textarea id="negativePrompt" placeholder="輸入不想出現的元素..."></textarea>
             <div class="negative-presets">
-                <span class="negative-preset" onclick="toggleNegativePreset(this)">模糊</span>
-                <span class="negative-preset" onclick="toggleNegativePreset(this)">jpeg偽影</span>
-                <span class="negative-preset" onclick="toggleNegativePreset(this)">低質量</span>
-                <span class="negative-preset" onclick="toggleNegativePreset(this)">卡通</span>
-                <span class="negative-preset" onclick="toggleNegativePreset(this)">塑料皮膚</span>
-                <span class="negative-preset" onclick="toggleNegativePreset(this)">水印</span>
+                <span class="negative-preset" onclick="toggleNegativePreset(this)">模糊 (Blur)</span>
+                <span class="negative-preset" onclick="toggleNegativePreset(this)">jpeg偽影 (Artifacts)</span>
+                <span class="negative-preset" onclick="toggleNegativePreset(this)">低質量 (Low Quality)</span>
+                <span class="negative-preset" onclick="toggleNegativePreset(this)">卡通 (Cartoon)</span>
+                <span class="negative-preset" onclick="toggleNegativePreset(this)">塑料皮膚 (Plastic Skin)</span>
+                <span class="negative-preset" onclick="toggleNegativePreset(this)">水印 (Watermark)</span>
             </div>
         </div>
         <div class="card nsfw-locked" id="nsfwCard">
@@ -249,117 +251,79 @@
         </div>
         <div class="card nsfw-content" id="nsfwContent">
             <h2 class="card-title" style="color:var(--bath-red);">🔞 成人選項</h2>
-            <div class="nsfw-category"><div class="nsfw-category-title">🟢 輕度</div>
+            <div class="nsfw-category">
+                <div class="nsfw-category-title">🟢 輕度 - 服裝 (Light)</div>
                 <div class="tags-container">
-                    <span class="tag level-light" data-nsfw="休閒服" onclick="toggleNSFW(this)">休閒服</span>
-                    <span class="tag level-light" data-nsfw="正裝" onclick="toggleNSFW(this)">正裝</span>
-                    <span class="tag level-light" data-nsfw="泳裝" onclick="toggleNSFW(this)">泳裝</span>
+                    <span class="tag level-light" data-nsfw="休閒服 (Casual Wear)" onclick="toggleNSFW(this)">休閒服</span>
+                    <span class="tag level-light" data-nsfw="正裝 (Formal Wear)" onclick="toggleNSFW(this)">正裝</span>
+                    <span class="tag level-light" data-nsfw="運動服 (Sportswear)" onclick="toggleNSFW(this)">運動服</span>
+                    <span class="tag level-light" data-nsfw="泳裝 (Swimsuit)" onclick="toggleNSFW(this)">泳裝</span>
+                    <span class="tag level-light" data-nsfw="睡衣 (Sleepwear)" onclick="toggleNSFW(this)">睡衣</span>
+                    <span class="tag level-light" data-nsfw="內搭衣 (Undergarment)" onclick="toggleNSFW(this)">內搭衣</span>
                 </div>
             </div>
-            <div class="nsfw-category"><div class="nsfw-category-title">🟡 中度</div>
+            <div class="nsfw-category">
+                <div class="nsfw-category-title">🟡 中度 - 服裝 (Medium)</div>
                 <div class="tags-container">
-                    <span class="tag level-medium" data-nsfw="內褲" onclick="toggleNSFW(this)">內褲</span>
-                    <span class="tag level-medium" data-nsfw="半裸" onclick="toggleNSFW(this)">半裸</span>
-                    <span class="tag level-medium" data-nsfw="比基尼" onclick="toggleNSFW(this)">比基尼</span>
+                    <span class="tag level-medium" data-nsfw="內褲 (Underwear)" onclick="toggleNSFW(this)">內褲</span>
+                    <span class="tag level-medium" data-nsfw="半裸 (Semi-Nude)" onclick="toggleNSFW(this)">半裸</span>
+                    <span class="tag level-medium" data-nsfw="比基尼 (Bikini)" onclick="toggleNSFW(this)">比基尼</span>
+                    <span class="tag level-medium" data-nsfw="性感內衣 (Lingerie)" onclick="toggleNSFW(this)">性感內衣</span>
+                    <span class="tag level-medium" data-nsfw="露腰 (Showing Midriff)" onclick="toggleNSFW(this)">露腰</span>
+                    <span class="tag level-medium" data-nsfw="迷你裙 (Mini Skirt)" onclick="toggleNSFW(this)">迷你裙</span>
+                    <span class="tag level-medium" data-nsfw="透明衣物 (Transparent Clothing)" onclick="toggleNSFW(this)">透明衣物</span>
                 </div>
             </div>
-            <div class="nsfw-category"><div class="nsfw-category-title">🔴 重度</div>
+            <div class="nsfw-category">
+                <div class="nsfw-category-title">🔴 重度 - 身體 (Heavy)</div>
                 <div class="tags-container">
-                    <span class="tag level-heavy" data-nsfw="全身赤裸" onclick="toggleNSFW(this)">全身赤裸</span>
-                    <span class="tag level-heavy" data-nsfw="性感姿勢" onclick="toggleNSFW(this)">性感姿勢</span>
+                    <span class="tag level-heavy" data-nsfw="全身赤裸 (Full Nude)" onclick="toggleNSFW(this)">全身赤裸</span>
+                    <span class="tag level-heavy" data-nsfw="性感姿勢 (Erotic Pose)" onclick="toggleNSFW(this)">性感姿勢</span>
+                    <span class="tag level-heavy" data-nsfw="濕身效果 (Wet Look)" onclick="toggleNSFW(this)">濕身</span>
+                    <span class="tag level-heavy" data-nsfw="內衣秀 (Lingerie Show)" onclick="toggleNSFW(this)">內衣秀</span>
                 </div>
             </div>
-        </div>
-        <div class="card">
-            <h2 class="card-title">✨ 生成的提示詞</h2>
-            <textarea id="output" class="output-textarea" placeholder="點擊生成..."></textarea>
-            <div class="btn-group">
-                <button class="btn btn-primary" onclick="generatePrompt()">✨ 生成</button>
-                <button class="btn btn-copy" onclick="copyToClipboard()">📋 複製</button>
-                <button class="btn btn-clear" onclick="clearAll()">🗑️ 清除</button>
+            <div class="nsfw-category">
+                <div class="nsfw-category-title">👤 身體部位特寫 (Body Parts)</div>
+                <div class="tags-container">
+                    <span class="tag" data-nsfw="臉部特寫 (Face Close-up)" onclick="toggleNSFW(this)">臉部特寫</span>
+                    <span class="tag" data-nsfw="眼睛特寫 (Eyes Close-up)" onclick="toggleNSFW(this)">眼睛特寫</span>
+                    <span class="tag" data-nsfw="嘴唇特寫 (Lips Close-up)" onclick="toggleNSFW(this)">嘴唇特寫</span>
+                    <span class="tag" data-nsfw="胸部特寫 (Breasts)" onclick="toggleNSFW(this)">胸部</span>
+                    <span class="tag" data-nsfw="臀部特寫 (Buttocks)" onclick="toggleNSFW(this)">臀部</span>
+                    <span class="tag" data-nsfw="腿部特寫 (Legs)" onclick="toggleNSFW(this)">腿部</span>
+                    <span class="tag" data-nsfw="手部特寫 (Hands)" onclick="toggleNSFW(this)">手部</span>
+                    <span class="tag" data-nsfw="腳部特寫 (Feet)" onclick="toggleNSFW(this)">腳部</span>
+                </div>
             </div>
-            <div class="info-box">
-                💡 <strong>Z-Image 技巧：</strong>guidance_scale=0，不用Negative Prompt
+            <div class="nsfw-category">
+                <div class="nsfw-category-title">🏠 場景氛圍 (Scene)</div>
+                <div class="tags-container">
+                    <span class="tag" data-nsfw="浪漫晚餐 (Romantic Dinner)" onclick="toggleNSFW(this)">浪漫晚餐</span>
+                    <span class="tag" data-nsfw="夜店 (Night Club)" onclick="toggleNSFW(this)">夜店</span>
+                    <span class="tag" data-nsfw="海灘日落 (Beach Sunset)" onclick="toggleNSFW(this)">海灘日落</span>
+                    <span class="tag" data-nsfw="飯店房間 (Hotel Room)" onclick="toggleNSFW(this)">飯店房間</span>
+                    <span class="tag" data-nsfw="浴缸 (Bathtub)" onclick="toggleNSFW(this)">浴缸</span>
+                    <span class="tag" data-nsfw="淋浴 (Shower)" onclick="toggleNSFW(this)">淋浴</span>
+                    <span class="tag" data-nsfw="床鋪 (Bed)" onclick="toggleNSFW(this)">床鋪</span>
+                </div>
             </div>
-        </div>
-    </main>
-    <footer><p>Made for Z-Image Users</p></footer>
-    <div class="toast" id="toast">已複製！</div>
-    <script>
-        const exclusiveState = {};
-        const multiState = new Set();
-        const nsfwState = new Set();
-        
-        function toggleExclusive(el) {
-            const group = el.dataset.exclusive;
-            document.querySelectorAll('.tag[data-exclusive="'+group+'"]').forEach(t => t.classList.remove('selected'));
-            el.classList.add('selected');
-            exclusiveState[group] = el.dataset.value;
-        }
-        
-        function toggleMulti(el) {
-            el.classList.toggle('selected');
-            if (el.classList.contains('selected')) multiState.add(el.dataset.value);
-            else multiState.delete(el.dataset.value);
-        }
-        
-        function toggleNSFW(el) {
-            el.classList.toggle('selected');
-            if (el.classList.contains('selected')) nsfwState.add(el.dataset.nsfw);
-            else nsfwState.delete(el.dataset.nsfw);
-        }
-        
-        function toggleNegativePreset(el) {
-            el.classList.toggle('selected');
-        }
-        
-        function unlockNSFW() {
-            if (document.getElementById('nsfwPassword').value === 'adult') {
-                document.getElementById('nsfwCard').style.display = 'none';
-                document.getElementById('nsfwContent').classList.add('unlocked');
-            } else {
-                document.getElementById('nsfwError').style.display = 'block';
-            }
-        }
-        
-        function generatePrompt() {
-            const parts = [];
-            const subject = document.getElementById('subject').value.trim();
-            if (subject) parts.push(subject);
-            
-            Object.values(exclusiveState).forEach(v => parts.push(v));
-            multiState.forEach(v => parts.push(v));
-            nsfwState.forEach(v => parts.push(v));
-            
-            const weight = document.getElementById('weightInput').value.trim();
-            if (weight) parts.push(weight);
-            
-            let result = parts.join(', ');
-            if (result && !result.includes('high quality')) result += ', high quality, detailed';
-            
-            document.getElementById('output').value = result || '請填寫主體描述';
-        }
-        
-        function copyToClipboard() {
-            const text = document.getElementById('output').value;
-            if (!text || text === '請填寫主體描述') return;
-            navigator.clipboard.writeText(text).then(() => showToast('已複製！'));
-        }
-        
-        function clearAll() {
-            document.querySelectorAll('.tag.selected').forEach(t => t.classList.remove('selected'));
-            ['subject','weightInput','negativePrompt','output'].forEach(id => document.getElementById(id).value = '');
-            Object.keys(exclusiveState).forEach(k => delete exclusiveState[k]);
-            multiState.clear(); nsfwState.clear();
-            showToast('已清除！');
-        }
-        
-        function showToast(msg) {
-            const t = document.getElementById('toast');
-            t.textContent = msg;
-            t.classList.add('show');
-            setTimeout(() => t.classList.remove('show'), 2500);
-        }
-    </script>
-</body>
-</html>
+            <div class="nsfw-category">
+                <div class="nsfw-category-title">💪 姿勢/動作 (Pose/Action)</div>
+                <div class="tags-container">
+                    <span class="tag" data-nsfw="坐姿 (Sitting)" onclick="toggleNSFW(this)">坐姿</span>
+                    <span class="tag" data-nsfw="躺姿 (Lying Down)" onclick="toggleNSFW(this)">躺姿</span>
+                    <span class="tag" data-nsfw="站立 (Standing)" onclick="toggleNSFW(this)">站立</span>
+                    <span class="tag" data-nsfw="彎腰 (Bending)" onclick="toggleNSFW(this)">彎腰</span>
+                    <span class="tag" data-nsfw="跪姿 (Kneeling)" onclick="toggleNSFW(this)">跪姿</span>
+                    <span class="tag" data-nsfw="趴姿 (Prone)" onclick="toggleNSFW(this)">趴姿</span>
+                </div>
+            </div>
+            <div class="nsfw-category">
+                <div class="nsfw-category-title">🎨 風格要求 (Style)</div>
+                <div class="tags-container">
+                    <span class="tag" data-nsfw="柔光 (Soft Lighting)" onclick="toggleNSFW(this)">柔光</span>
+                    <span class="tag" data-nsfw="黑暗情緒 (Dark Moody)" onclick="toggleNSFW(this)">黑暗情緒</span>
+                    <span class="tag" data-nsfw="柔焦 (Soft Focus)" onclick="toggleNSFW(this)">柔焦</span>
+                    <span class="tag" data-nsfw="藝術感 (Artistic)" onclick="toggleNSFW(this)">藝術感</span>
+                    <span class="tag" data-nsfw="美顏濾鏡
